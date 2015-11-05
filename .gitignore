@@ -1,0 +1,10 @@
+*.obj
+*.dot
+*.log
+*.pyc
+.DS_Store
+.project
+.pydevproject
+octave-workspace
+logs/
+test/
