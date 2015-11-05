@@ -6,7 +6,7 @@ xunzip:
 
 transform:
 	############################################
-	### generate near-raw data in tsv format
+	### generate data in tsv format
 	############################################
 	cd docprocess && bash transform.sh
 

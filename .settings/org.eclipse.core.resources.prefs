@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//docprocess/SimpleCleaner.py=utf-8
+encoding//docprocess/SpecCharFilter.py=utf-8
+encoding//docprocess/cal_cat_prob.py=utf-8
+encoding//docprocess/json_to_csv_converter.py=utf-8
+encoding//docprocess/split.py=utf-8
+encoding//docprocess/tip.py=utf-8
+encoding//docprocess/transform.py=utf-8
