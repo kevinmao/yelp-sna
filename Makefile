@@ -10,11 +10,11 @@ transform:
 	############################################
 	cd docprocess && bash transform.sh
 
-split:
+check_user:
 	############################################
-	### split multiple email docs
+	### check user
 	############################################
-	cd docprocess && bash split.sh
+	cd docprocess && bash check_user.sh
 
 clean:
 	############################################
