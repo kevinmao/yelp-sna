@@ -7,12 +7,12 @@ yelp academic dataset
 
 2. Compressed Files
 
-    * yelp_dataset_challenge_academic_dataset.tgz
+    * raw/zip/yelp_dataset_challenge_academic_dataset.tgz
 
-2. Uncompressed Files
+3. Uncompressed Files
 
-    * yelp_academic_dataset_business.json
-    * yelp_academic_dataset_review.json
-    * yelp_academic_dataset_user.json
-    * yelp_academic_dataset_checkin.json
-    * yelp_academic_dataset_tip.json    
+    * raw/json/yelp_academic_dataset_business.json
+    * raw/json/yelp_academic_dataset_review.json
+    * raw/json/yelp_academic_dataset_user.json
+    * raw/json/yelp_academic_dataset_checkin.json
+    * raw/json/yelp_academic_dataset_tip.json    
