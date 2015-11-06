@@ -34,11 +34,11 @@ import simplejson as json
 """
 HEADER = ['# business_id', 'business_str_id', 'name']
     
-def process(inputFile, outputFile):
+def process(inputFile, outputFile, startid):
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
         fout.write('\t'.join(HEADER))
         fout.write('\n')
-        i = 0
+        i = startid
         for line in fin:
             line_contents = json.loads(line)
             business_id = line_contents['business_id']
@@ -55,7 +55,8 @@ def process(inputFile, outputFile):
 def main(args):
     inputFile = args.input
     outputFile = args.output
-    process(inputFile, outputFile)   
+    startid = args.startid
+    process(inputFile, outputFile, startid)   
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')
@@ -63,5 +64,7 @@ if __name__ == "__main__":
                         help='input file in json format')
     parser.add_argument('--output', metavar='FILE', required = True, 
                         help='output file in tsv format')
+    parser.add_argument('--startid', metavar='N', type=int, default = 400000,
+                        help='start node id')    
     args = parser.parse_args()
     main(args)

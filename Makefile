@@ -22,11 +22,29 @@ user_user:
 	############################################
 	cd docprocess/shell && bash user_user.sh
 
+business_keys:
+	############################################
+	### business keys
+	############################################
+	cd docprocess/shell && bash business_keys.sh
+
+user_review_business:
+	############################################
+	### user_review_business graphs
+	############################################
+	cd docprocess/shell && bash user_review_business.sh
+
 check_user:
 	############################################
 	### check user
 	############################################
 	cd docprocess/shell && bash check_user.sh
+
+check_user_biz_review:
+	############################################
+	### check_user_biz_review
+	############################################
+	cd docprocess/shell && bash check_user_biz_review.sh
 
 clean:
 	############################################
