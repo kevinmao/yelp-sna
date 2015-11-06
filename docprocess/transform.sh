@@ -6,7 +6,6 @@ mkdir -p ${YELP_DATA_TSV}
 
 prefix=yelp_academic_dataset
 
-: << 'EOM'
 # tip file
 ftype=tip
 LOGGER "Processing ${prefix}_${ftype}.json"
@@ -46,17 +45,6 @@ rm -f ${YELP_DATA_TSV}/${ftype}.tsv
 python checkin.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
-EOM
-
-# user key file
-ftype=user
-LOGGER "Processing ${prefix}_${ftype}.json"
-rm -f ${YELP_DATA_TSV}/${ftype}_key*.tsv
-python user_key.py \
---input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
---output ${YELP_DATA_TSV}/${ftype}_key.tsv \
---output_superset ${YELP_DATA_TSV}/${ftype}_key_superset.tsv \
---output_user_user ${YELP_DATA_TSV}/${ftype}_user_edges.tsv \
-
 
 LOGGER "Done."
+

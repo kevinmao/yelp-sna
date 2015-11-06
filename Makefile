@@ -10,6 +10,12 @@ transform:
 	############################################
 	cd docprocess && bash transform.sh
 
+user_keys:
+	############################################
+	### user keys
+	############################################
+	cd docprocess && bash user_keys.sh
+
 check_user:
 	############################################
 	### check user
