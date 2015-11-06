@@ -24,7 +24,7 @@ def load_business_keys(inputFile):
             business_dict[business_str_id] = business_id
     return business_dict        
 
-def checker(user_keys_file, business_keys_file, review_file):
+def checker(user_keys_file, business_keys_file, review_file, output_file):
     user_dict = load_user_keys(user_keys_file)
     business_dict = load_business_keys(business_keys_file)
 
@@ -42,20 +42,20 @@ def checker(user_keys_file, business_keys_file, review_file):
             review_user_set.add(user_id)
             review_business_set.add(business_id)
 
-    print 'all_user = ', len(all_user)       
-    print 'all_business = ', len(all_business)
-    print       
-    print 'review_user = ', len(review_user_set)       
-    print 'review_business = ', len(review_business_set)       
-    print       
-    print 'all_user - review_user = ', len(all_user - review_user_set)       
-    print 'all_business - review_business = ', len(all_business - review_business_set)       
+    with open(output_file, 'w') as fout:
+        fout.write('all_user = ' +  str(len(all_user)) + '\n')
+        fout.write('all_business = ' +  str(len(all_business)) + '\n\n')
+        fout.write('review_user = ' +  str(len(review_user_set)) + '\n')
+        fout.write('review_business = ' +  str(len(review_business_set)) + '\n\n')
+        fout.write('all_user - review_user = ' +  str(len(all_user - review_user_set)) + '\n')
+        fout.write('all_business - review_business = ' +  str(len(all_business - review_business_set)) + '\n')
 
 def main(args):
     user_keys_file = args.user_keys
     business_keys_file = args.business_keys
     review_file = args.review
-    checker(user_keys_file, business_keys_file, review_file)
+    output_file = args.output
+    checker(user_keys_file, business_keys_file, review_file, output_file)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')
@@ -65,5 +65,7 @@ if __name__ == "__main__":
                         help='business_keys file in tsv format')
     parser.add_argument('--review', metavar='FILE', required = True, 
                         help='review file in tsv format')
+    parser.add_argument('--output', metavar='FILE', required = True, 
+                        help='output file')
     args = parser.parse_args()
     main(args)

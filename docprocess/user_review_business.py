@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import simplejson as json
-import operator
 from collections import defaultdict
 from itertools import combinations
+import operator
 
 HEADER_UB = ['# user_id', 'business_id']
 HEADER_UU = ['# user_id', 'user_id']
@@ -32,29 +31,24 @@ def load_business_keys(inputFile):
             business_dict[business_str_id] = business_id
     return business_dict        
     
-def user_business_review_edges(user_keys_file, 
-                               business_keys_file, 
+def user_business_review_edges(user_dict,
+                               business_dict,
                                review_file, 
                                user_business_review_edges_file):
-    print "user_business_review_edges"
-    user_dict = load_user_keys(user_keys_file)
-    business_dict = load_business_keys(business_keys_file)
     edge_set = set()
-
-    print "user_business_review_edges:111"
     with open(review_file) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
             line_contents = line.strip('\n').split('\t')
             user_id = line_contents[0]
             business_id = line_contents[1]
+            if user_id not in user_dict: continue
+            if business_id not in business_dict: continue
             e = [user_dict[user_id], business_dict[business_id]]
             g = tuple(e)
             edge_set.add(g)
 
-    print "user_business_review_edges:222", len(edge_set)
-    #edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
-    edge_set_sorted = edge_set
+    edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
     with open(user_business_review_edges_file, 'w') as fout:
         fout.write('\t'.join(HEADER_UB))
         fout.write('\n')
@@ -62,78 +56,66 @@ def user_business_review_edges(user_keys_file,
             fout.write('\t'.join([str(e1),str(e2)]))
             fout.write('\n')
 
-def user_user_review_edges(user_keys_file,
-                           business_keys_file,
+def user_user_review_edges(user_dict,
+                           business_dict,
                            review_file,
                            user_user_review_edges_file):
-    print "user_user_review_edges"
-    user_dict = load_user_keys(user_keys_file)
-    business_dict = load_business_keys(business_keys_file)
     groupby_business = defaultdict(list)
-
-    print "user_user_review_edges:111"
     with open(review_file) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
             line_contents = line.strip('\n').split('\t')
             user_id = line_contents[0]
             business_id = line_contents[1]
-            groupby_business[business_id].append(user_id)
+            if user_id not in user_dict: continue
+            if business_id not in business_dict: continue
+            uid = user_dict[user_id]
+            bid = business_dict[business_id]
+            groupby_business[bid].append(uid)
 
-    print "user_user_review_edges:222"
     edge_set = set()
-    for biz in groupby_business:
-        U = list(set(groupby_business[biz]))
-        if len(U) < 2: continue
-        E = list(combinations(U,2))
-        for e1, e2 in E:
-            e = [user_dict[e1], user_dict[e2]]
-            g = tuple(sorted(e))
-            edge_set.add(g)
+    for bid in groupby_business.keys():
+        L = list(set(groupby_business[bid]))
+        if len(L) < 2: continue
+        E = list(combinations(L,2))
+        for e in E:
+            edge_set.add(e)
 
-    print "user_user_review_edges:333", len(edge_set)
-    #edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
-    edge_set_sorted = edge_set
+    edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
     with open(user_user_review_edges_file, 'w') as fout:
         fout.write('\t'.join(HEADER_UU))
         fout.write('\n')
-        for e in edge_set_sorted:
+        for e1, e2 in edge_set_sorted:
             fout.write('\t'.join([str(e1),str(e2)]))
             fout.write('\n')
 
 
-def business_business_review_edges(user_keys_file,
-                           business_keys_file,
-                           review_file,
-                           business_business_review_edges_file):
-    print "business_business_review_edges"
-    user_dict = load_user_keys(user_keys_file)
-    business_dict = load_business_keys(business_keys_file)
+def business_business_review_edges(user_dict,
+                                   business_dict,
+                                   review_file,
+                                   business_business_review_edges_file):
     groupby_user = defaultdict(list)
-
-    print "business_business_review_edges:111"
     with open(review_file) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
             line_contents = line.strip('\n').split('\t')
             user_id = line_contents[0]
             business_id = line_contents[1]
-            groupby_user[user_id].append(business_id)
+            if user_id not in user_dict: continue
+            if business_id not in business_dict: continue
+            uid = user_dict[user_id]
+            bid = business_dict[business_id]
+            groupby_user[uid].append(bid)
 
-    print "business_business_review_edges:222"
     edge_set = set()
-    for usr in groupby_user:
-        B = list(set(groupby_user[usr]))
-        if len(B) < 2: continue
-        E = list(combinations(B,2))
-        for e1, e2 in E:
-            e = [business_dict[e1], business_dict[e2]]
-            g = tuple(sorted(e))
-            edge_set.add(g)
+    for uid in groupby_user.keys():
+        L = list(set(groupby_user[uid]))
+        if len(L) < 2: continue
+        E = list(combinations(L,2))
+        for e in E:
+            edge_set.add(e)
 
-    print "business_business_review_edges:333", len(edge_set)
-    #edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
-    edge_set_sorted = edge_set
+    edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
     with open(business_business_review_edges_file, 'w') as fout:
         fout.write('\t'.join(HEADER_BB))
         fout.write('\n')
@@ -149,27 +131,28 @@ def main(args):
     business_business_review_edges_file = args.business_business_review_edges
     user_business_review_edges_file = args.user_business_review_edges
     
-    """
-    # user-user    
-    user_user_review_edges(user_keys_file,
-                           business_keys_file,
-                           review_file,
-                           user_user_review_edges_file)
-
-    """
+    USER_DICT = load_user_keys(user_keys_file)
+    BUSINESS_DICT = load_business_keys(business_keys_file)
+    
     # user-business    
-    user_business_review_edges(user_keys_file, 
-                               business_keys_file, 
+    user_business_review_edges(USER_DICT,
+                               BUSINESS_DICT,
                                review_file,
                                user_business_review_edges_file
                                )   
 
     """
-    # business business    
-    business_business_review_edges(user_keys_file,
-                           business_keys_file,
+    # user-user    
+    user_user_review_edges(USER_DICT,
+                           BUSINESS_DICT,
                            review_file,
-                           business_business_review_edges_file)
+                           user_user_review_edges_file)
+
+    # business business    
+    business_business_review_edges(USER_DICT,
+                                   BUSINESS_DICT,
+                                   review_file,
+                                   business_business_review_edges_file)
     """
 
 if __name__ == "__main__":

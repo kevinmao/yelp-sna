@@ -10,6 +10,7 @@ prefix=yelp_academic_dataset
 python ${DOC_PROCESS}/check_user_biz_review.py \
 --user_keys ${YELP_DATA_TSV}/user_keys.tsv \
 --business_keys ${YELP_DATA_TSV}/business_keys.tsv \
---review ${YELP_DATA_TSV}/review.tsv 
+--review ${YELP_DATA_TSV}/review.tsv \
+--output ${YELP_DATA_TSV}/stats.tsv 
 
 LOGGER "Done."
