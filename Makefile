@@ -48,6 +48,12 @@ check_user_biz_review:
 	############################################
 	cd docprocess/shell && bash check_user_biz_review.sh
 
+review_histgram:
+	############################################
+	### review_histgram
+	############################################
+	cd docprocess/shell && bash review_histgram.sh
+
 clean:
 	############################################
 	### clean up email body
