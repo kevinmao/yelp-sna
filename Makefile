@@ -2,37 +2,37 @@ xunzip:
 	############################################
 	### uncompress yelp data
 	############################################
-	cd docprocess && bash xunzip.sh
+	cd docprocess/shell && bash xunzip.sh
 
 transform:
 	############################################
 	### generate data in tsv format
 	############################################
-	cd docprocess && bash transform.sh
+	cd docprocess/shell && bash transform.sh
 
 user_keys:
 	############################################
 	### user keys
 	############################################
-	cd docprocess && bash user_keys.sh
+	cd docprocess/shell && bash user_keys.sh
 
 user_user:
 	############################################
 	### user user graph
 	############################################
-	cd docprocess && bash user_user.sh
+	cd docprocess/shell && bash user_user.sh
 
 check_user:
 	############################################
 	### check user
 	############################################
-	cd docprocess && bash check_user.sh
+	cd docprocess/shell && bash check_user.sh
 
 clean:
 	############################################
 	### clean up email body
 	############################################
-	cd docprocess && bash clean.sh
+	cd docprocess/shell && bash clean.sh
 
 genfeat:
 	############################################

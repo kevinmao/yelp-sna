@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # global vars
-source ../config.sh
+source ../../config.sh
 
 # reset
 rm -fr ${YELP_DATA_JSON}

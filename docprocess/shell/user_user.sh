@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # global vars
-source ../config.sh 
+source ../../config.sh 
 mkdir -p ${YELP_DATA_TSV}
 
 prefix=yelp_academic_dataset
@@ -10,7 +10,7 @@ prefix=yelp_academic_dataset
 ftype=user
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}_user_edges.tsv
-python user_user.py \
+python ${DOC_PROCESS}/user_user.py \
 --user ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --user_keys ${YELP_DATA_TSV}/${ftype}_keys.tsv \
 --user_user_edges ${YELP_DATA_TSV}/${ftype}_user_edges.tsv 

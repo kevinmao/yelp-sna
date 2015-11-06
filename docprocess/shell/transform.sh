@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # global vars
-source ../config.sh 
+source ../../config.sh 
 mkdir -p ${YELP_DATA_TSV}
 
 prefix=yelp_academic_dataset
@@ -10,7 +10,7 @@ prefix=yelp_academic_dataset
 ftype=tip
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python tip.py \
+python ${DOC_PROCESS}/tip.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -18,7 +18,7 @@ python tip.py \
 ftype=review
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python review.py \
+python ${DOC_PROCESS}/review.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -26,7 +26,7 @@ python review.py \
 ftype=user
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python user.py \
+python ${DOC_PROCESS}/user.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -34,7 +34,7 @@ python user.py \
 ftype=business
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python business.py \
+python ${DOC_PROCESS}/business.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -42,7 +42,7 @@ python business.py \
 ftype=checkin
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python checkin.py \
+python ${DOC_PROCESS}/checkin.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
