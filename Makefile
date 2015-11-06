@@ -16,6 +16,12 @@ user_keys:
 	############################################
 	cd docprocess && bash user_keys.sh
 
+user_user:
+	############################################
+	### user user graph
+	############################################
+	cd docprocess && bash user_user.sh
+
 check_user:
 	############################################
 	### check user

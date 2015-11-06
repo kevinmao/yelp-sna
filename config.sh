@@ -16,6 +16,9 @@ export MALLET_HOME=${PROJECT_HOME}/Mallet
 ############################################
 ### corpus processing 
 ############################################
+## data processing
+export DOC_PROCESS=${PROJECT_HOME}/docprocess
+
 ## corpus data 
 export CORPUS_DATA=${PROJECT_HOME}/yelp_data
 

@@ -9,10 +9,11 @@ prefix=yelp_academic_dataset
 # user key file
 ftype=user
 LOGGER "Processing ${prefix}_${ftype}.json"
-rm -f ${YELP_DATA_TSV}/${ftype}_key*.tsv
+rm -f ${YELP_DATA_TSV}/${ftype}_user_edges.tsv
 python user_user.py \
---input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
---output ${YELP_DATA_TSV}/${ftype}_key.tsv \
---output_user_user ${YELP_DATA_TSV}/${ftype}_user_edges.tsv 
+--user ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
+--user_keys ${YELP_DATA_TSV}/${ftype}_keys.tsv \
+--user_user_edges ${YELP_DATA_TSV}/${ftype}_user_edges.tsv 
 
 LOGGER "Done."
+

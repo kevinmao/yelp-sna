@@ -29,8 +29,9 @@ def load_user_keys(inputFile):
     user_dict = {}
     with open(inputFile) as fin:
         for line in fin:
+            if line.find('# user_id') >= 0: continue
             line_contents = line.strip('\n').split('\t')
-            user_id = line_contents[0]
+            user_id = int(line_contents[0])
             user_str_id = line_contents[1]
             user_dict[user_str_id] = user_id
     return user_dict        

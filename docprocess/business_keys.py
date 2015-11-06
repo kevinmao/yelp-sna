@@ -5,24 +5,34 @@ import simplejson as json
 
 """
 {
-    'type': 'user',
-    'user_id': (encrypted user id),
-    'name': (first name),
-    'review_count': (review count),
-    'average_stars': (floating point average, like 4.31),
-    'votes': {(vote type): (count)},
-    'friends': [(friend user_ids)],
-    'elite': [(years_elite)],
-    'yelping_since': (date, formatted like '2012-03'),
-    'compliments': {
-        (compliment_type): (num_compliments_of_this_type),
+    'type': 'business',
+    'business_id': (encrypted business id),
+    'name': (business name),
+    'neighborhoods': [(hood names)],
+    'full_address': (localized address),
+    'city': (city),
+    'state': (state),
+    'latitude': latitude,
+    'longitude': longitude,
+    'stars': (star rating, rounded to half-stars),
+    'review_count': review count,
+    'categories': [(localized category names)]
+    'open': True / False (corresponds to closed, not business hours),
+    'hours': {
+        (day_of_week): {
+            'open': (HH:MM),
+            'close': (HH:MM)
+        },
         ...
     },
-    'fans': (num_fans),
+    'attributes': {
+        (attribute_name): (attribute_value),
+        ...
+    },
 }
 
 """
-HEADER = ['# user_id', 'user_str_id', 'name']
+HEADER = ['# business_id', 'business_str_id', 'name']
     
 def process(inputFile, outputFile):
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
@@ -31,11 +41,11 @@ def process(inputFile, outputFile):
         i = 0
         for line in fin:
             line_contents = json.loads(line)
-            user_id = line_contents['user_id']
+            business_id = line_contents['business_id']
             name = line_contents['name']
             fout.write('\t'.join([
                                   str(i),
-                                  user_id,
+                                  business_id,
                                   name,
                                   ]
                                  ).encode('utf-8'))
