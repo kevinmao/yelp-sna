@@ -1,4 +1,4 @@
-all: transform user_keys user_user business_keys user_review_business check_user_biz_review
+all: transform user_keys user_user business_keys user_review_business check_user_biz_review review_histgram
 
 xunzip:
 	############################################

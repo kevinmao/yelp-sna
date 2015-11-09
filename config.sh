@@ -18,6 +18,9 @@ export MALLET_HOME=${PROJECT_HOME}/Mallet
 ############################################
 ## data processing
 export DOC_PROCESS=${PROJECT_HOME}/docprocess
+export DOC_PROCESS_SHELL=${DOC_PROCESS}/shell
+export DOC_PROCESS_PYTHON=${DOC_PROCESS}/python
+export DOC_PROCESS_PIG=${DOC_PROCESS}/pig
 
 ## corpus data 
 export CORPUS_DATA=${PROJECT_HOME}/yelp_data

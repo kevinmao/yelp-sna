@@ -10,7 +10,7 @@ prefix=yelp_academic_dataset
 ftype=tip
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python ${DOC_PROCESS}/tip.py \
+python ${DOC_PROCESS_PYTHON}/tip.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -18,7 +18,7 @@ python ${DOC_PROCESS}/tip.py \
 ftype=review
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python ${DOC_PROCESS}/review.py \
+python ${DOC_PROCESS_PYTHON}/review.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -26,7 +26,7 @@ python ${DOC_PROCESS}/review.py \
 ftype=user
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python ${DOC_PROCESS}/user.py \
+python ${DOC_PROCESS_PYTHON}/user.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -34,7 +34,7 @@ python ${DOC_PROCESS}/user.py \
 ftype=business
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python ${DOC_PROCESS}/business.py \
+python ${DOC_PROCESS_PYTHON}/business.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 
@@ -42,7 +42,7 @@ python ${DOC_PROCESS}/business.py \
 ftype=checkin
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/${ftype}.tsv
-python ${DOC_PROCESS}/checkin.py \
+python ${DOC_PROCESS_PYTHON}/checkin.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --output ${YELP_DATA_TSV}/${ftype}.tsv
 

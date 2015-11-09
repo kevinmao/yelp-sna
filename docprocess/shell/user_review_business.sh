@@ -10,7 +10,7 @@ prefix=yelp_academic_dataset
 ftype=review
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${YELP_DATA_TSV}/{user_user_review_edges,user_business_review_edges,business_business_review_edges}
-python ${DOC_PROCESS}/user_review_business.py \
+python ${DOC_PROCESS_PYTHON}/user_review_business.py \
 --user_keys ${YELP_DATA_TSV}/user_keys.tsv \
 --business_keys ${YELP_DATA_TSV}/business_keys.tsv \
 --review ${YELP_DATA_TSV}/review.tsv \
