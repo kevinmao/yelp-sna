@@ -13,6 +13,7 @@ for fpig in `echo $PIGFILE`; do
 out=${WDIR}/$(basename $fpig | sed 's/\.pig//g')
 hadoop fs -rm -r -skipTrash ${out} >/dev/null 2>&1
 pig -useversion 0.11 -f ${DOC_PROCESS_PIG}/${fpig} \
+-Dmapred.job.queue.name=gpu \
 -Dmapred.map.tasks.speculative.execution=true \
 -Dmapred.reduce.tasks.speculative.execution=true \
 -Dmapred.job.map.memory.mb=3076 \
