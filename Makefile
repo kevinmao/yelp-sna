@@ -54,6 +54,12 @@ review_histgram:
 	############################################
 	cd docprocess/shell && bash review_histgram.sh
 
+generate_graphs:
+	############################################
+	### generate_graphs
+	############################################
+	cd docprocess/pig && bash generate_graphs.sh
+
 clean:
 	############################################
 	### clean up email body
