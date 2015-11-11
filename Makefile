@@ -1,5 +1,5 @@
 all: transform split_review
-xtrain: user_keys business_keys user_user
+xkeys: user_keys business_keys user_user
 xstats: review_histgram check_user_biz_review
 
 xunzip:
@@ -61,6 +61,12 @@ generate_graphs:
 	### generate_graphs
 	############################################
 	cd docprocess/pig && bash generate_graphs.sh
+
+create_induced_graphs:
+	############################################
+	### create_induced_graphs
+	############################################
+	cd docprocess/shell && bash create_induced_graphs.sh
 
 clean:
 	############################################

@@ -48,10 +48,8 @@ export TEST_DATA=${CORPUS_DATA}/test
 export HDFS_DATA=${CORPUS_DATA}/hdfs
 
 ############################################
-### HDFS
+### Hadoop HDFS
 ############################################
-
-## HDFS home
 HDFS_PRJ_HOME=/user/$USER/${PRJ_NAME}
 export HDFS_YELP_DATA_TSV=${HDFS_PRJ_HOME}/yelp_data/tsv
 export HDFS_TRAIN_DATA=${HDFS_PRJ_HOME}/yelp_data/train
