@@ -36,7 +36,7 @@ def load_user_keys(inputFile):
             user_dict[user_str_id] = user_id
     return user_dict        
     
-def user_user_friend_edges(user_file, user_keys_file, user_user_friend_edges_file):
+def user_friend_edges(user_file, user_keys_file, user_friend_edges_file):
     user_dict = load_user_keys(user_keys_file)
     edge_set = set()
 
@@ -51,7 +51,7 @@ def user_user_friend_edges(user_file, user_keys_file, user_user_friend_edges_fil
                 edge_set.add(g)
 
     edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
-    with open(user_user_friend_edges_file, 'w') as fout:
+    with open(user_friend_edges_file, 'w') as fout:
         fout.write('\t'.join(HEADER))
         fout.write('\n')
         for e in edge_set_sorted:
@@ -61,8 +61,8 @@ def user_user_friend_edges(user_file, user_keys_file, user_user_friend_edges_fil
 def main(args):
     user_file = args.user
     user_keys_file = args.user_keys
-    user_user_friend_edges_file = args.user_user_friend_edges
-    user_user_friend_edges(user_file, user_keys_file, user_user_friend_edges_file)   
+    user_friend_edges_file = args.user_friend_edges
+    user_friend_edges(user_file, user_keys_file, user_friend_edges_file)   
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')
@@ -70,7 +70,7 @@ if __name__ == "__main__":
                         help='user file in json format')
     parser.add_argument('--user_keys', metavar='FILE', required = True, 
                         help='user_keys file in tsv format')
-    parser.add_argument('--user_user_friend_edges', metavar='FILE', required = True, 
-                        help='user_user_friend_edges file in tsv format')
+    parser.add_argument('--user_friend_edges', metavar='FILE', required = True, 
+                        help='user_friend_edges file in tsv format')
     args = parser.parse_args()
     main(args)

@@ -1,4 +1,6 @@
-all: transform user_keys user_user business_keys user_review_business review_histgram
+all: transform split_review
+xtrain: user_keys business_keys user_user
+xstats: review_histgram check_user_biz_review
 
 xunzip:
 	############################################

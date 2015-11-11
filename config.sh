@@ -34,6 +34,9 @@ export YELP_DATA_JSON=${CORPUS_DATA}/raw/json
 ## processed data in tsv format
 export YELP_DATA_TSV=${CORPUS_DATA}/processed/tsv
 
+## stats data
+export YELP_DATA_STATS=${CORPUS_DATA}/processed/stats
+
 ## training data
 export TRAIN_DATA=${CORPUS_DATA}/processed/train
 

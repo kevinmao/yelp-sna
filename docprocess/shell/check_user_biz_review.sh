@@ -2,17 +2,17 @@
 
 # global vars
 source ../../config.sh 
-mkdir -p ${YELP_DATA_TSV}
+mkdir -p ${YELP_DATA_STATS}
 
 prefix=yelp_academic_dataset
-output=${YELP_DATA_TSV}/stats.tsv
-ftmp=${YELP_DATA_TSV}/stats.tsv.tmp
+output=${YELP_DATA_STATS}/stats.tsv
+ftmp=${YELP_DATA_STATS}/stats.tsv.tmp
 
 # user file
 echo "------------ users [business] with reviews ------------" > ${ftmp}
 python ${DOC_PROCESS_PYTHON}/check_user_biz_review.py \
---user_keys ${YELP_DATA_TSV}/user_keys.tsv \
---business_keys ${YELP_DATA_TSV}/business_keys.tsv \
+--user_keys ${TRAIN_DATA}/user_keys.tsv \
+--business_keys ${TRAIN_DATA}/business_keys.tsv \
 --review ${YELP_DATA_TSV}/review.tsv \
 --output ${output}
 cat ${output} >> ${ftmp}
