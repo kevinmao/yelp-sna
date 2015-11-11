@@ -36,9 +36,9 @@ def check_user_key(inputFile):
             for f in friends:
                 all_users.add(f)
     unknown_users = all_users - users
-    print "all_users=",len(all_users)
-    print "users=",len(users)
-    print "unknown_users=", len(unknown_users)
+    print "all_users+friends = ",len(all_users)
+    print "all_users = ",len(users)
+    print "unknown_users = ", len(unknown_users)
 
 def main(args):
     inputFile = args.input

@@ -44,9 +44,9 @@ def checker(user_keys_file, business_keys_file, review_file, output_file):
 
     with open(output_file, 'w') as fout:
         fout.write('all_user = ' +  str(len(all_user)) + '\n')
-        fout.write('all_business = ' +  str(len(all_business)) + '\n\n')
+        fout.write('all_business = ' +  str(len(all_business)) + '\n')
         fout.write('review_user = ' +  str(len(review_user_set)) + '\n')
-        fout.write('review_business = ' +  str(len(review_business_set)) + '\n\n')
+        fout.write('review_business = ' +  str(len(review_business_set)) + '\n')
         fout.write('all_user - review_user = ' +  str(len(all_user - review_user_set)) + '\n')
         fout.write('all_business - review_business = ' +  str(len(all_business - review_business_set)) + '\n')
 
