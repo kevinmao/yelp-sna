@@ -44,6 +44,9 @@ export TRAIN_DATA=${CORPUS_DATA}/train
 ## test data
 export TEST_DATA=${CORPUS_DATA}/test
 
+## local copy of data processed on hadoop
+export HDFS_DATA=${CORPUS_DATA}/hdfs
+
 ############################################
 ### HDFS
 ############################################

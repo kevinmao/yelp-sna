@@ -18,7 +18,7 @@ Review=${HDFS_YELP_DATA_TSV}/${fname}
 F=$(echo $fname | sed 's/.tsv//g')
 for fpig in `echo $PigFilesS`; do
 G=$(basename $fpig | sed 's/_review_graph.pig//g')
-out=${WDIR}/${F}_${G}
+out=${WDIR}/${G}_${F}
 hadoop fs -rm -r -skipTrash ${out} >/dev/null 2>&1
 pig -useversion 0.11 -f ${DOC_PROCESS_PIG}/${fpig} \
 -Dmapred.job.queue.name=gpu \
