@@ -32,11 +32,11 @@ business_keys:
 	############################################
 	cd docprocess/shell && bash business_keys.sh
 
-user_review_business:
+review_all_ub:
 	############################################
-	### user_review_business graphs
+	### review_all_ub graph
 	############################################
-	cd docprocess/shell && bash user_review_business.sh
+	cd docprocess/shell && bash review_all_ub.sh
 
 split_review:
 	############################################
