@@ -66,7 +66,7 @@ create_induced_graphs:
 	############################################
 	### create_induced_graphs
 	############################################
-	cd docprocess/shell && bash create_induced_graphs.sh
+	cd train/shell && bash create_induced_graphs.sh
 
 clean:
 	############################################
