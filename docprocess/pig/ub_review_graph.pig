@@ -5,7 +5,7 @@
 %default Output out
 
 -- Parallel
-SET default_parallel 1
+SET default_parallel 10
 
 --
 -- Load data

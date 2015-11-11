@@ -5,10 +5,6 @@
 %default Output out
 
 -- Parallel
-SET default_parallel 1
-
-
--- Parallel
 SET default_parallel 10
 
 DEFINE TRANSFORMER `python transformer.py` ship ('transformer.py');

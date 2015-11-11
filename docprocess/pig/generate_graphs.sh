@@ -6,7 +6,7 @@ UserKeys=user_keys.tsv
 BusinessKeys=business_keys.tsv
 Review=review.tsv
 WDIR=out
-PIGFILE="uu_review_graph.pig bb_review_graph.pig ub_review_graph.pig"
+PIGFILE="ub_review_graph.pig uu_review_graph.pig bb_review_graph.pig"
 
 # run
 for fpig in `echo $PIGFILE`; do
