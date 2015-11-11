@@ -109,5 +109,8 @@ J9 = FOREACH J8 GENERATE
 DESCRIBE J9;
 
 BBG = ORDER J9 BY business1_id, business2_id;
-STORE BBG into '$Output' using PigStorage('\t', '-schema');
+BBG2 = FOREACH BBG GENERATE
+	business1_id .. common_reviews,
+	(1.0 * common_reviews) / (business1_reviews + business2_reviews) AS jaccard_sim;
+STORE BBG2 into '$Output' using PigStorage('\t', '-schema');
 

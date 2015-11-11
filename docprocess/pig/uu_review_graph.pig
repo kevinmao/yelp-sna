@@ -110,5 +110,8 @@ J9 = FOREACH J8 GENERATE
 DESCRIBE J9;
 
 UUG = ORDER J9 BY user1_id, user2_id;
-STORE UUG into '$Output' using PigStorage('\t', '-schema');
+UUG2 = FOREACH UUG GENERATE
+	user1_id .. common_reviews,
+	(1.0 * common_reviews) / (user1_reviews + user2_reviews) AS jaccard_sim;
+STORE UUG2 into '$Output' using PigStorage('\t', '-schema');
 
