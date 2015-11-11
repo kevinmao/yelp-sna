@@ -1,4 +1,4 @@
-all: transform user_keys user_user business_keys user_review_business check_user_biz_review review_histgram
+all: transform user_keys user_user business_keys user_review_business review_histgram
 
 xunzip:
 	############################################
@@ -36,7 +36,13 @@ user_review_business:
 	############################################
 	cd docprocess/shell && bash user_review_business.sh
 
-check_user_biz_review:
+split_review:
+	############################################
+	### split_review into train and test
+	############################################
+	cd docprocess/shell && bash split_review.sh
+
+check_user_biz_review: split_review
 	############################################
 	### check_user_biz_review
 	############################################

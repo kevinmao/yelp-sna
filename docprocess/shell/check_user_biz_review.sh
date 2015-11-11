@@ -17,15 +17,23 @@ python ${DOC_PROCESS_PYTHON}/check_user_biz_review.py \
 --output ${output}
 cat ${output} >> ${ftmp}
 
-echo >> ${ftmp}
-echo "------------ users and friends ------------" >> ${ftmp}
+{
+echo
+echo "------------ users and friends ------------"
 ftype=user
 python ${DOC_PROCESS_PYTHON}/check_user.py \
---input ${YELP_DATA_JSON}/${prefix}_${ftype}.json >> ${ftmp}
+--input ${YELP_DATA_JSON}/${prefix}_${ftype}.json
 
-echo >> ${ftmp} 
-echo "------------ review by year ------------" >> ${ftmp}
-cat ${YELP_DATA_TSV}/review.tsv | cut -f4 | grep -v date | cut -d- -f1 | sort | uniq -c | sort -k2 | awk '{print $2"\t"$1}' >> ${ftmp}
+echo 
+echo "------------ review per year ------------" 
+cat ${YELP_DATA_TSV}/review.tsv | cut -f4 | grep -v date | cut -d- -f1 | sort | uniq -c | sort -k2 | awk '{print $2"\t"$1}'
+
+echo
+echo "------------ common (user, review) pairs in train and test data ------------"
+python ${DOC_PROCESS_PYTHON}/check_train.py \
+--train_data ${YELP_DATA_TSV}/review_train.tsv \
+--test_data ${YELP_DATA_TSV}/review_test.tsv
+} >> ${ftmp}
 
 mv ${ftmp} ${output}
 
