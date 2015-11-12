@@ -27,7 +27,7 @@ def load_bb_graph(inputFile):
     bb_edge_set = set()
     with open(inputFile) as fin:
         for line in fin:
-            if line.find('# user1_id') >= 0: continue
+            if line.find('# business1_id') >= 0: continue
             row = line.strip('\n').split('\t')
             business1_id = int(row[0])
             business2_id = int(row[1])
