@@ -56,7 +56,6 @@ BBU = STREAM C THROUGH TRANSFORMER AS (
 	business2: chararray, 
 	user: chararray 
 );
-BBU = DISTINCT BBU;
 DESCRIBE BBU;
 
 GB12 = GROUP BBU BY (business1, business2);

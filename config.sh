@@ -59,6 +59,13 @@ export HDFS_TEST_DATA=${HDFS_PRJ_HOME}/yelp_data/test
 ############################################
 ### training and testing
 ############################################
+## data processing
+export TRAINING=${PROJECT_HOME}/train
+export TRAINING_SHELL=${TRAINING}/shell
+export TRAINING_PYTHON=${TRAINING}/python
+export TRAINING_PIG=${TRAINING}/pig
+
+
 ## Mallet data
 export MALLET_DATA=${PROJECT_HOME}/mallet-data
 

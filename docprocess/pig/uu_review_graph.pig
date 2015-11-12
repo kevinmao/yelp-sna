@@ -57,6 +57,7 @@ UUB = STREAM C THROUGH TRANSFORMER AS (
 	user2: chararray, 
 	business: chararray 
 );
+UUB = DISTINCT UUB;
 DESCRIBE UUB;
 
 GU12 = GROUP UUB BY (user1, user2);
