@@ -14,12 +14,6 @@ transform:
 	############################################
 	cd docprocess/shell && bash transform.sh
 
-ub_review_all:
-	############################################
-	### ub_review_all graph
-	############################################
-	cd docprocess/shell && bash ub_review_all.sh
-
 split_review:
 	############################################
 	### split_review into train and test
@@ -62,6 +56,12 @@ business_keys:
 	############################################
 	cd train/shell && bash business_keys.sh
 
+ub_review_all:
+	############################################
+	### ub_review_all graph
+	############################################
+	cd train/shell && bash ub_review_all.sh
+
 create_induced_graphs:
 	############################################
 	### create_induced_graphs
@@ -80,6 +80,11 @@ clean:
 	### clean up email body
 	############################################
 	cd docprocess/shell && bash clean.sh
+
+
+
+
+
 
 genfeat:
 	############################################

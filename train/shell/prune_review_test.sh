@@ -11,7 +11,7 @@ PrunedTest=${YELP_DATA_TSV}/review_test_pruned.tsv
 # user key file
 LOGGER "Start..."
 rm -f ${PrunedTest}
-python ${DOC_PROCESS_PYTHON}/prune_review_test.py \
+python ${TRAINING_PYTHON}/prune_review_test.py \
 --review_train ${Train} \
 --review_test ${Test} \
 --review_test_pruned ${PrunedTest}
