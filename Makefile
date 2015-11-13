@@ -37,13 +37,19 @@ check_user_biz_review: split_review
 	############################################
 	### check_user_biz_review
 	############################################
-	cd stats/shell && bash check_user_biz_review.sh
+	cd analysis/shell && bash check_user_biz_review.sh
 
 review_histgram:
 	############################################
 	### review_histgram
 	############################################
-	cd stats/shell && bash review_histgram.sh
+	cd analysis/shell && bash review_histgram.sh
+
+degree_dist:
+	############################################
+	### degree_dist
+	############################################
+	cd analysis/shell && bash degree_dist.sh
 
 
 user_keys:
@@ -82,12 +88,6 @@ create_induced_graphs:
 	### based on the results from generate_graphs
 	############################################
 	cd train/shell && bash create_induced_graphs.sh
-
-degree_dist:
-	############################################
-	### degree_dist
-	############################################
-	cd train/shell && bash degree_dist.sh
 
 create_internal_link_candidates:
 	############################################

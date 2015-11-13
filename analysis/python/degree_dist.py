@@ -58,8 +58,8 @@ def plfitDegreeDistr(G, outputFile):
     fit = plfit.plfit(L)
     
     # plfit fitted parameters
-    with open(outputFile, 'w+') as fout:
-        fout.write("\nplfit fitted parameters\n")
+    with open(outputFile, 'a') as fout:
+        fout.write("\nplfit fitted parameters:\n")
         fout.write("\txmin = " + str(fit._xmin) + "\n")
         fout.write("\talpha = " + str(fit._alpha) + "\n")
         fout.write("\tks = " + str(fit._ks) + "\n")
@@ -76,8 +76,8 @@ def topWCC(G, outputFile, n=10):
     # sort and get top 10    
     L = sorted(L, key=itemgetter(0), reverse=True)
 
-    with open(outputFile, 'w+') as fout:
-        fout.write("\nWCC Info: ")
+    with open(outputFile, 'a') as fout:
+        fout.write("\nWCC Info: \n")
         for i in range(n):
             e = L[i]
             fout.write("\tWccSzCnt[" + str(i) + "] = (" + str(e[0]) + "," + str(e[1]) + ")\n")
@@ -90,11 +90,11 @@ def main(args):
     # load graph
     G = snap.LoadEdgeList(snap.PUNGraph, ub_review_edges_file, 0, 1)
 
-    # graph info
-    snap.PrintInfo(G, "yelp-review-stats", degree_dist_info_file, False)
-
     # plot
     loglog_plot(G, degree_dist_plot_file)
+
+    # graph info
+    snap.PrintInfo(G, "yelp-review-stats", degree_dist_info_file, False)
 
     # plift
     plfitDegreeDistr(G, degree_dist_info_file)

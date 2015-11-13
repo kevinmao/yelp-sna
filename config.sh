@@ -65,9 +65,9 @@ export TRAINING_PYTHON=${TRAINING}/python
 export TRAINING_PIG=${TRAINING}/pig
 
 ############################################
-### stats
+### analysis
 ############################################
-export STATS=${PROJECT_HOME}/stats
+export STATS=${PROJECT_HOME}/analysis
 export STATS_SHELL=${STATS}/shell
 export STATS_PYTHON=${STATS}/python
 export STATS_PIG=${STATS}/pig
