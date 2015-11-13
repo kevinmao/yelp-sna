@@ -20,6 +20,12 @@ split_review:
 	############################################
 	cd docprocess/shell && bash split_review.sh
 
+core_review:
+	############################################
+	### core_review for train and test data
+	############################################
+	cd docprocess/shell && bash core_review.sh
+
 check_user_biz_review: split_review
 	############################################
 	### check_user_biz_review
