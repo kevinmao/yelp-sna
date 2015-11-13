@@ -1,4 +1,4 @@
-all: transform split_review
+all: transform split_review core_review
 xkeys: user_keys business_keys user_user
 xstats: review_histgram check_user_biz_review
 
@@ -20,11 +20,18 @@ split_review:
 	############################################
 	cd docprocess/shell && bash split_review.sh
 
-core_review:
+core_review: split_review
 	############################################
 	### core_review for train and test data
 	############################################
 	cd docprocess/shell && bash core_review.sh
+
+generate_graphs:
+	############################################
+	### generate_graphs on hadoop
+	############################################
+	cd docprocess/pig && bash generate_graphs.sh
+
 
 check_user_biz_review: split_review
 	############################################
@@ -36,13 +43,8 @@ review_histgram:
 	############################################
 	### review_histgram
 	############################################
-	cd docprocess/shell && bash review_histgram.sh
+	cd stats/shell && bash review_histgram.sh
 
-generate_graphs:
-	############################################
-	### generate_graphs on hadoop
-	############################################
-	cd docprocess/pig && bash generate_graphs.sh
 
 user_keys:
 	############################################
