@@ -67,7 +67,6 @@ def plfitDegreeDistr(G, outputFile):
         fout.write("\tlikelihood = " + str(fit._likelihood) + "\n")
 
 def topWCC(G, outputFile, n=10):
-    print "WCC Info: "
     WccSzCnt = snap.TIntPrV()
     snap.GetWccSzCnt(G, WccSzCnt)
     L = []
@@ -75,7 +74,7 @@ def topWCC(G, outputFile, n=10):
         e = (WccSzCnt[i].Val1.Val, WccSzCnt[i].Val2.Val)
         L.append(e)
     # sort and get top 10    
-    L = sorted(L, key=itemgetter(1), reverse=True)
+    L = sorted(L, key=itemgetter(0), reverse=True)
 
     with open(outputFile, 'w+') as fout:
         fout.write("\nWCC Info: ")
@@ -87,7 +86,6 @@ def main(args):
     ub_review_edges_file = args.ub_review_edges
     degree_dist_info_file = args.degree_dist_info
     degree_dist_plot_file = args.degree_dist_plot
-    wcc_count_file = args.wcc_count
 
     # load graph
     G = snap.LoadEdgeList(snap.PUNGraph, ub_review_edges_file, 0, 1)
@@ -98,15 +96,17 @@ def main(args):
     # plot
     loglog_plot(G, degree_dist_plot_file)
 
-    # wcc
-    topWCC(G, wcc_count_file)
+    # plift
+    plfitDegreeDistr(G, degree_dist_info_file)
     
+    # wcc
+    topWCC(G, degree_dist_info_file)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp data')
     parser.add_argument('--ub_review_edges', metavar='FILE', required = True, help='ub_review_edges file')
     parser.add_argument('--degree_dist_info', metavar='FILE', required = True, help='degree_dist_info')
     parser.add_argument('--degree_dist_plot', metavar='FILE', required = True, help='degree_dist_plot')
-    parser.add_argument('--wcc_count', metavar='FILE', required = True, help='wcc_count')
     args = parser.parse_args()
     main(args)
     
