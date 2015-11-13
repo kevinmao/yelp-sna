@@ -10,7 +10,7 @@ prefix=yelp_academic_dataset
 ftype=user
 LOGGER "Processing ${prefix}_${ftype}.json"
 rm -f ${TRAIN_DATA}/user_friend_edges.tsv
-python ${DOC_PROCESS_PYTHON}/user_user.py \
+python ${TRAINING_PYTHON}/user_user.py \
 --user ${YELP_DATA_JSON}/${prefix}_${ftype}.json \
 --user_keys ${TRAIN_DATA}/${ftype}_keys.tsv \
 --user_friend_edges ${TRAIN_DATA}/user_friend_edges.tsv

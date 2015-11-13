@@ -14,24 +14,6 @@ transform:
 	############################################
 	cd docprocess/shell && bash transform.sh
 
-user_keys:
-	############################################
-	### user keys
-	############################################
-	cd docprocess/shell && bash user_keys.sh
-
-user_user:
-	############################################
-	### user user graph
-	############################################
-	cd docprocess/shell && bash user_user.sh
-
-business_keys:
-	############################################
-	### business keys
-	############################################
-	cd docprocess/shell && bash business_keys.sh
-
 ub_review_all:
 	############################################
 	### ub_review_all graph
@@ -61,6 +43,24 @@ generate_graphs:
 	### generate_graphs on hadoop
 	############################################
 	cd docprocess/pig && bash generate_graphs.sh
+
+user_keys:
+	############################################
+	### user keys
+	############################################
+	cd train/shell && bash user_keys.sh
+
+user_user:
+	############################################
+	### user user graph
+	############################################
+	cd train/shell && bash user_user.sh
+
+business_keys:
+	############################################
+	### business keys
+	############################################
+	cd train/shell && bash business_keys.sh
 
 create_induced_graphs:
 	############################################
