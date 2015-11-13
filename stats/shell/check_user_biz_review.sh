@@ -10,7 +10,7 @@ ftmp=${YELP_DATA_STATS}/stats.tsv.tmp
 
 # user file
 echo "------------ users [business] with reviews ------------" > ${ftmp}
-python ${DOC_PROCESS_PYTHON}/check_user_biz_review.py \
+python ${STATS_PYTHON}/check_user_biz_review.py \
 --user_keys ${TRAIN_DATA}/user_keys.tsv \
 --business_keys ${TRAIN_DATA}/business_keys.tsv \
 --review ${YELP_DATA_TSV}/review.tsv \
@@ -21,7 +21,7 @@ cat ${output} >> ${ftmp}
 echo
 echo "------------ users and friends ------------"
 ftype=user
-python ${DOC_PROCESS_PYTHON}/check_user.py \
+python ${STATS_PYTHON}/check_user.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json
 
 echo 
@@ -30,7 +30,7 @@ cat ${YELP_DATA_TSV}/review.tsv | cut -f4 | grep -v date | cut -d- -f1 | sort | 
 
 echo
 echo "------------ common (user, review) pairs in train and test data ------------"
-python ${DOC_PROCESS_PYTHON}/check_train.py \
+python ${STATS_PYTHON}/check_train.py \
 --train_data ${YELP_DATA_TSV}/review_train.tsv \
 --test_data ${YELP_DATA_TSV}/review_test.tsv
 } >> ${ftmp}

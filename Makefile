@@ -24,7 +24,7 @@ check_user_biz_review: split_review
 	############################################
 	### check_user_biz_review
 	############################################
-	cd docprocess/shell && bash check_user_biz_review.sh
+	cd stats/shell && bash check_user_biz_review.sh
 
 review_histgram:
 	############################################
