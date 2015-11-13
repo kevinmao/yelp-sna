@@ -83,6 +83,12 @@ create_induced_graphs:
 	############################################
 	cd train/shell && bash create_induced_graphs.sh
 
+degree_dist:
+	############################################
+	### degree_dist
+	############################################
+	cd train/shell && bash degree_dist.sh
+
 create_internal_link_candidates:
 	############################################
 	### create_internal_link_candidates
