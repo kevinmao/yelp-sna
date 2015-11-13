@@ -3,6 +3,8 @@
 import argparse
 from collections import defaultdict
 
+HEADER_UB = ['# user_id', 'business_id']
+
 def load_ub_graph(inputFile):
     print "load_ub_graph"
     user_set = set()
@@ -78,6 +80,8 @@ def main(args):
                                     ub_neighbor_dict,
                                     uu_edge_set)
     with open(internal_link_candidates_file, 'w') as fout:
+        fout.write('\t'.join(HEADER_UB))
+        fout.write('\n')
         for e in S:
             L = list(e)
             L = [ str(a) for a in L ]

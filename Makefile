@@ -58,15 +58,22 @@ review_histgram:
 
 generate_graphs:
 	############################################
-	### generate_graphs
+	### generate_graphs on hadoop
 	############################################
 	cd docprocess/pig && bash generate_graphs.sh
 
 create_induced_graphs:
 	############################################
 	### create_induced_graphs
+	### based on the results from generate_graphs
 	############################################
 	cd train/shell && bash create_induced_graphs.sh
+
+create_internal_link_candidates:
+	############################################
+	### create_internal_link_candidates
+	############################################
+	cd train/shell && bash create_internal_link_candidates.sh
 
 clean:
 	############################################
