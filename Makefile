@@ -64,6 +64,12 @@ business_keys:
 	############################################
 	cd train/shell && bash business_keys.sh
 
+create_induced_graphs:
+	############################################
+	### create_induced_graphs
+	############################################
+	cd train/pig && bash create_induced_graphs.sh
+
 ub_review_all:
 	############################################
 	### ub_review_all graph

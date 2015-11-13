@@ -5,7 +5,7 @@ source ../../config.sh
 mkdir -p ${TRAIN_DATA}
 
 suffix=edges.tsv
-FolderList="bb_review_all bb_review_test bb_review_train ub_review_all ub_review_test ub_review_train uu_review_all uu_review_test uu_review_train"
+FolderList="bb_review_test_core bb_review_train_core ub_review_test_core ub_review_train_core uu_review_test_core uu_review_train_core"
 
 LOGGER "Start..."
 for d in `echo ${FolderList}`; do
