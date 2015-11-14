@@ -29,7 +29,7 @@ def loglog_plot(G, outfile, isLoglog = True):
     plt.clf()
     
     clr = 'red'
-    lbl = 'yelp reviews'
+    lbl = 'review graph'
     D = getDegreeToCount(G)
     degreeV = D['degreeV']
     normCountV = D['normCountV']

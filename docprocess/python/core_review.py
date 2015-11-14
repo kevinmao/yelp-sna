@@ -8,6 +8,7 @@ MIN_DEGREE = 5
 def ub_core_train(inputFile):
     User = set()
     Business = set()
+    Edge = set()
     UserDegree = defaultdict(int)
     BusinessDegree = defaultdict(int)
     with open(inputFile) as fin:
@@ -16,8 +17,10 @@ def ub_core_train(inputFile):
             row = line.strip('\n').split('\t')
             user_id = row[0]
             business_id = row[1]
+            e = (user_id, business_id)
             User.add(user_id)
             Business.add(business_id)
+            Edge.add(e)
             UserDegree[user_id] += 1
             BusinessDegree[business_id] += 1
     # core user
@@ -32,9 +35,9 @@ def ub_core_train(inputFile):
         if BusinessDegree[b] < MIN_DEGREE: continue
         Core_Business.add(b)
     print len(Core_User), len(Core_Business)
-    return Core_User, Core_Business
+    return Core_User, Core_Business, Edge
 
-def core_data(inputFile, outputFile, Core_User, Core_Business):
+def core_review_train(inputFile, outputFile, Core_User, Core_Business):
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
         for line in fin:
             if line.find('# user_id') >= 0:
@@ -46,7 +49,7 @@ def core_data(inputFile, outputFile, Core_User, Core_Business):
             if user_id in Core_User and business_id in Core_Business:
                 fout.write(line)  
 
-def core_review_test(inputFile, outputFile, Train_User, Train_Business):
+def core_review_test(inputFile, outputFile, Train_User, Train_Business, Train_Edge):
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
         for line in fin:
             if line.find('# user_id') >= 0:
@@ -55,6 +58,8 @@ def core_review_test(inputFile, outputFile, Train_User, Train_Business):
             row = line.strip('\n').split('\t')
             user_id = row[0]
             business_id = row[1]
+            e = (user_id, business_id)
+            if e in Train_Edge: continue
             if user_id in Train_User and business_id in Train_Business:
                 fout.write(line)  
 
@@ -64,9 +69,9 @@ def main(args):
     review_train_core_file = args.review_train_core
     review_test_core_file = args.review_test_core
     
-    Core_User, Core_Business = ub_core_train(review_train_file)
-    core_data(review_train_file, review_train_core_file, Core_User, Core_Business)
-    core_data(review_test_file, review_test_core_file, Core_User, Core_Business)
+    Core_User, Core_Business, Core_Edge = ub_core_train(review_train_file)
+    core_review_train(review_train_file, review_train_core_file, Core_User, Core_Business)
+    core_review_test(review_test_file, review_test_core_file, Core_User, Core_Business, Core_Edge)
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')
