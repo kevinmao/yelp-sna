@@ -38,6 +38,7 @@ def ub_core_train(inputFile):
     return Core_User, Core_Business, Edge
 
 def core_review_train(inputFile, outputFile, Core_User, Core_Business):
+    seen_edge = set()
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
         for line in fin:
             if line.find('# user_id') >= 0:
@@ -46,10 +47,14 @@ def core_review_train(inputFile, outputFile, Core_User, Core_Business):
             row = line.strip('\n').split('\t')
             user_id = row[0]
             business_id = row[1]
+            e = (user_id, business_id)
+            if e in seen_edge: continue
             if user_id in Core_User and business_id in Core_Business:
+                seen_edge.add(e)
                 fout.write(line)  
 
 def core_review_test(inputFile, outputFile, Train_User, Train_Business, Train_Edge):
+    seen_edge = set()
     with open(inputFile) as fin, open(outputFile, 'w') as fout:
         for line in fin:
             if line.find('# user_id') >= 0:
@@ -60,7 +65,9 @@ def core_review_test(inputFile, outputFile, Train_User, Train_Business, Train_Ed
             business_id = row[1]
             e = (user_id, business_id)
             if e in Train_Edge: continue
+            if e in seen_edge: continue
             if user_id in Train_User and business_id in Train_Business:
+                seen_edge.add(e)
                 fout.write(line)  
 
 def main(args):
