@@ -89,6 +89,12 @@ create_internal_link_candidates:
 	############################################
 	cd train/shell && bash create_internal_link_candidates.sh
 
+ub_cross_prod:
+	############################################
+	### ub_cross_prod
+	############################################
+	cd train/shell && bash ub_cross_prod.sh
+
 create_mf_data:
 	############################################
 	### create_mf_data

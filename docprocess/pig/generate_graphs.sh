@@ -10,7 +10,7 @@ UserKeys=${HDFS_TRAIN_DATA}/user_keys.tsv
 BusinessKeys=${HDFS_TRAIN_DATA}/business_keys.tsv
 ReviewFiles="review_test_core.tsv review_train_core.tsv"
 WDIR=${HDFS_PRJ_HOME}/out
-PigFilesS="ub_review_graph.pig bb_review_graph.pig uu_review_graph.pig"
+PigFilesS="bb_review_graph.pig uu_review_graph.pig"
 
 # run
 for fname in `echo ${ReviewFiles}`; do
