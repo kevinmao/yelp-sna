@@ -4,9 +4,10 @@
 source ../../config.sh 
 mkdir -p ${TRAIN_DATA}
 
+lbl=${1:-rating}
+
 mf_train_data=${MF_DATA}/mf_ub_review_train.tsv
 mf_test_data=${MF_DATA}/mf_ub_review_test.tsv
-mf_meta=${MF_DATA}/meta
 mf_model=${MF_DATA}/model
 mf_predicted_result=${MF_DATA}/predicted_result
 mf_log=${MF_DATA}/mf.log

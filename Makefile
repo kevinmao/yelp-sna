@@ -1,5 +1,6 @@
 all: transform split_review core_review
 xkeys: user_keys business_keys user_user
+xub: ub_review_all
 xstats: review_histgram check_user_biz_review
 
 xunzip:
@@ -89,11 +90,11 @@ create_internal_link_candidates:
 	############################################
 	cd train/shell && bash create_internal_link_candidates.sh
 
-ub_cross_prod:
+cross_prod:
 	############################################
-	### ub_cross_prod
+	### cross_prod
 	############################################
-	cd train/shell && bash ub_cross_prod.sh
+	cd train/shell && bash cross_prod.sh
 
 create_mf_data:
 	############################################

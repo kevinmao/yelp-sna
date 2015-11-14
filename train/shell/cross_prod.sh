@@ -8,7 +8,7 @@ LOGGER "Start..."
 
 # files
 ub_review_train_core_edges=${TRAIN_DATA}/ub_review_train_core_edges.tsv
-ub_cross_prod=${TRAIN_DATA}/ub_cross_prod.tsv
+ub_cross_prod=${MF_DATA}/ub_cross_prod.tsv
 
 # process review
 rm -f ${ub_review_cross_prod_edges}
