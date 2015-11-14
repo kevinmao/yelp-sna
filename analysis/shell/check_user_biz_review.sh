@@ -31,8 +31,8 @@ cat ${YELP_DATA_TSV}/review.tsv | cut -f4 | grep -v date | cut -d- -f1 | sort | 
 echo
 echo "------------ common (user, review) pairs in train and test data ------------"
 python ${STATS_PYTHON}/check_train.py \
---train_data ${YELP_DATA_TSV}/review_train.tsv \
---test_data ${YELP_DATA_TSV}/review_test.tsv
+--train_data ${YELP_DATA_TSV}/review_train_core.tsv \
+--test_data ${YELP_DATA_TSV}/review_test_core.tsv
 } >> ${ftmp}
 
 mv ${ftmp} ${output}
