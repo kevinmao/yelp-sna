@@ -70,12 +70,6 @@ business_keys:
 	############################################
 	cd train/shell && bash business_keys.sh
 
-create_induced_graphs:
-	############################################
-	### create_induced_graphs
-	############################################
-	cd train/pig && bash create_induced_graphs.sh
-
 ub_review_all:
 	############################################
 	### ub_review_all graph
@@ -94,6 +88,20 @@ create_internal_link_candidates:
 	### create_internal_link_candidates
 	############################################
 	cd train/shell && bash create_internal_link_candidates.sh
+
+create_mf_data:
+	############################################
+	### create_mf_data
+	############################################
+	cd train/shell && bash create_mf_data.sh
+
+mf_train:
+	############################################
+	### mf_train
+	############################################
+	cd train/shell && bash mf_train.sh
+
+
 
 clean:
 	############################################

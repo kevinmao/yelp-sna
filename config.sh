@@ -24,28 +24,31 @@ export DOC_PROCESS_PYTHON=${DOC_PROCESS}/python
 export DOC_PROCESS_PIG=${DOC_PROCESS}/pig
 
 ## corpus data 
-export CORPUS_DATA=${PROJECT_HOME}/yelp_data
+export DATA_ROOT=${PROJECT_HOME}/yelp_data
 
 ## yelp data zipped
-export YELP_DATA_ZIP=${CORPUS_DATA}/raw/zip
+export YELP_DATA_ZIP=${DATA_ROOT}/raw/zip
 
 ## yelp data json
-export YELP_DATA_JSON=${CORPUS_DATA}/raw/json
+export YELP_DATA_JSON=${DATA_ROOT}/raw/json
 
 ## processed data in tsv format
-export YELP_DATA_TSV=${CORPUS_DATA}/tsv
+export YELP_DATA_TSV=${DATA_ROOT}/tsv
 
 ## stats data
-export YELP_DATA_STATS=${CORPUS_DATA}/stats
+export YELP_DATA_STATS=${DATA_ROOT}/stats
 
 ## training data
-export TRAIN_DATA=${CORPUS_DATA}/train
+export TRAIN_DATA=${DATA_ROOT}/train
 
 ## test data
-export TEST_DATA=${CORPUS_DATA}/test
+export TEST_DATA=${DATA_ROOT}/test
 
 ## local copy of data processed on hadoop
-export HDFS_DATA=${CORPUS_DATA}/hdfs
+export HDFS_DATA=${DATA_ROOT}/hdfs
+
+## MF data
+export MF_DATA=${DATA_ROOT}/mf
 
 ############################################
 ### Hadoop HDFS
@@ -72,12 +75,11 @@ export STATS_SHELL=${STATS}/shell
 export STATS_PYTHON=${STATS}/python
 export STATS_PIG=${STATS}/pig
 
-
-
-
-
-## Mallet data
-export MALLET_DATA=${PROJECT_HOME}/mallet-data
+############################################
+### LIBPMF
+############################################
+export LIBPMF=${PROJECT_HOME}/libpmf
+export LIBMF=${PROJECT_HOME}/libmf
 
 ############################################
 ### report and visualization
