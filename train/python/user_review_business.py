@@ -27,10 +27,10 @@ def load_business_keys(inputFile):
             business_dict[business_str_id] = business_id
     return business_dict        
     
-def ub_review_all_edges(user_dict,
+def ub_review_edges(user_dict,
                                business_dict,
                                review_file, 
-                               ub_review_all_edges_file):
+                               ub_review_edges_file):
     edge_set = []
     with open(review_file) as fin:
         for line in fin:
@@ -46,7 +46,7 @@ def ub_review_all_edges(user_dict,
             edge_set.append(g)
 
     edge_set_sorted = sorted(edge_set, key=operator.itemgetter(0, 1))
-    with open(ub_review_all_edges_file, 'w') as fout:
+    with open(ub_review_edges_file, 'w') as fout:
         fout.write('\t'.join(HEADER_UB))
         fout.write('\n')
         for e1, e2, e3 in edge_set_sorted:
@@ -57,16 +57,16 @@ def main(args):
     user_keys_file = args.user_keys
     business_keys_file = args.business_keys
     review_file = args.review
-    ub_review_all_edges_file = args.ub_review_all_edges
+    ub_review_edges_file = args.ub_review_edges
     
     USER_DICT = load_user_keys(user_keys_file)
     BUSINESS_DICT = load_business_keys(business_keys_file)
     
     # user-business    
-    ub_review_all_edges(USER_DICT,
+    ub_review_edges(USER_DICT,
                                BUSINESS_DICT,
                                review_file,
-                               ub_review_all_edges_file
+                               ub_review_edges_file
                                )   
 
 if __name__ == "__main__":
@@ -77,7 +77,7 @@ if __name__ == "__main__":
                         help='business_keys file in tsv format')
     parser.add_argument('--review', metavar='FILE', required = True, 
                         help='review file in tsv format')
-    parser.add_argument('--ub_review_all_edges', metavar='FILE', required = True, 
-                        help='ub_review_all_edges file in tsv format')
+    parser.add_argument('--ub_review_edges', metavar='FILE', required = True, 
+                        help='ub_review_edges file in tsv format')
     args = parser.parse_args()
     main(args)
