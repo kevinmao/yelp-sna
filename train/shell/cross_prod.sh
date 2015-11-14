@@ -17,4 +17,3 @@ python ${TRAINING_PYTHON}/ub_cross_prod.py \
 --ub_cross_prod ${ub_cross_prod}
 
 LOGGER "Done."
-
