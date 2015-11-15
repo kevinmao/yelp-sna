@@ -44,6 +44,9 @@ export TRAIN_DATA=${DATA_ROOT}/train
 ## test data
 export TEST_DATA=${DATA_ROOT}/test
 
+## training data
+export PREDICT_DATA=${DATA_ROOT}/predict
+
 ## local copy of data processed on hadoop
 export HDFS_DATA=${DATA_ROOT}/hdfs
 

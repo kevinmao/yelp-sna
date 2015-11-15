@@ -96,9 +96,15 @@ ub_similarity:
 
 top_n:
 	############################################
-	### topn predicted
+	### topn predicted on hadoop
 	############################################
 	cd train/pig && bash top_n.sh
+
+predicted_topn:
+	############################################
+	### predicted_topn
+	############################################
+	cd train/shell && bash predicted_topn.sh
 
 create_induced_graphs:
 	############################################
