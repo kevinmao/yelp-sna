@@ -36,7 +36,7 @@ export YELP_DATA_JSON=${DATA_ROOT}/raw/json
 export YELP_DATA_TSV=${DATA_ROOT}/tsv
 
 ## stats data
-export YELP_DATA_STATS=${DATA_ROOT}/stats
+export YELP_DATA_STATS=${DATA_ROOT}/analysis
 
 ## training data
 export TRAIN_DATA=${DATA_ROOT}/train

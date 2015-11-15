@@ -4,6 +4,7 @@ xub: ub_review_all
 xsim: ub_similarity
 xtopn: top_n
 xstats: check_user_biz_review review_per_year
+xgraph: graph_info
 xplot: degree_dist
 
 xunzip:
@@ -55,6 +56,14 @@ review_per_year:
 	### review_per_year
 	############################################
 	cd analysis/shell && bash review_per_year.sh
+
+
+#
+graph_info:
+	############################################
+	### graph_info
+	############################################
+	cd analysis/shell && bash graph_info.sh
 
 
 degree_dist:

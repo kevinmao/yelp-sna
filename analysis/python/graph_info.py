@@ -2,8 +2,6 @@ import snap
 import plfit
 import argparse
 from operator import itemgetter
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 
 def load_graph(inputFile, outputFile):
     User = set()
@@ -37,29 +35,6 @@ def getDegreeToCount(G):
     normCountV = [ k / float(N) for k in countV ]
     D = {'degreeV': degreeV, 'countV': countV, 'normCountV': normCountV}
     return D
-
-def loglog_plot(G, outfile, isLoglog = True):
-    """ Log-log plot for the degree distributions
-    """
-    pp = PdfPages(outfile)
-    plt.figure()
-    plt.clf()
-    
-    clr = 'red'
-    lbl = 'review graph'
-    D = getDegreeToCount(G)
-    degreeV = D['degreeV']
-    normCountV = D['normCountV']
-    plt.loglog(degreeV, normCountV, color = clr, label = lbl)
-
-    # add legend, etc
-    plt.legend()
-    plt.title('Degree Distribution', fontsize=18)
-    plt.xlabel('degree')
-    plt.ylabel("fraction of nodes")
-    plt.grid()
-    pp.savefig()
-    pp.close()
 
 def plfitDegreeDistr(G, outputFile):
     """ Power-law fit degree distribution
@@ -107,32 +82,30 @@ def topWCC(G, outputFile, n=5):
     
 def main(args):
     ub_review_edges_file = args.ub_review_edges
-    degree_dist_info_file = args.degree_dist_info
-    degree_dist_plot_file = args.degree_dist_plot
+    graph_info_file = args.graph_info
 
     # load graph
     G = snap.LoadEdgeList(snap.PUNGraph, ub_review_edges_file, 0, 1)
 
-    # plot
-    loglog_plot(G, degree_dist_plot_file)
-
     # graph info
-    snap.PrintInfo(G, "yelp-review-stats", degree_dist_info_file, False)
+    snap.PrintInfo(G, "yelp-review-stats", graph_info_file, False)
 
     # plift
-    plfitDegreeDistr(G, degree_dist_info_file)
+    plfitDegreeDistr(G, graph_info_file)
     
     # clustering coefficient
-    clustCf(G, degree_dist_info_file)
+    clustCf(G, graph_info_file)
     
     # wcc
-    topWCC(G, degree_dist_info_file)
+    topWCC(G, graph_info_file)
 
+    # number of users, businesses, reviews
+    load_graph(ub_review_edges_file, graph_info_file)
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp data')
     parser.add_argument('--ub_review_edges', metavar='FILE', required = True, help='ub_review_edges file')
-    parser.add_argument('--degree_dist_info', metavar='FILE', required = True, help='degree_dist_info')
-    parser.add_argument('--degree_dist_plot', metavar='FILE', required = True, help='degree_dist_plot')
+    parser.add_argument('--graph_info', metavar='FILE', required = True, help='graph_info')
     args = parser.parse_args()
     main(args)
     
