@@ -2,15 +2,26 @@
 
 source ../../config.sh
 
-N=100000
-Predicted=ub_similarity.tsv
-TestCore=ub_review_test_core_edges.tsv
-TopPredicted=predict_topn
-TruePositive=predict_topn.TP
-{
-hadoop fs -rm -r -skipTrash ${TruePositive}* ${TopPredicted}*
-} >/dev/null 2>&1
+# files
+LocalPredicted=${TRAIN_DATA}/ub_similarity.tsv
+LocalTestCore=${TRAIN_DATA}/ub_review_test_core_edges.tsv
 
+Predicted=${HDFS_TRAIN_DATA}/ub_similarity.tsv
+TestCore=${HDFS_TRAIN_DATA}/ub_review_test_core_edges.tsv
+WDIR=${HDFS_PRJ_HOME}/out
+TopPredicted=${WDIR}/predict_topn
+TruePositive=${WDIR}/predict_topn.TP
+
+# upload
+cat ${LocalPredicted} | grep -v 'user_id' > ${LocalPredicted}.tmp
+cat ${LocalTestCore} | grep -v 'user_id' > ${LocalTestCore}.tmp
+N=$(cat $LocalTestCore | grep -v 'user_id' | wc -l)
+
+hadoop fs -rm -r -skipTrash ${TruePositive}* ${TopPredicted}*
+hadoop fs -put ${LocalPredicted}.tmp ${Predicted}
+hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
+
+# run
 fpig=top_n_ub_more.pig
 
 pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
