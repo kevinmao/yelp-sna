@@ -66,10 +66,10 @@ J5 = FOREACH J4 GENERATE
 J5 = DISTINCT J5;
 DESCRIBE J5;
 
-UUG = ORDER J9 BY user1_id_id, user2_id_id;
+UUG = ORDER J9 BY user1_id, user2_id;
 UUG2 = FOREACH UUG GENERATE
-	user1_id_id .. sim_common_nbr,
-	(user1_reviews * user2_reviews) AS sim_prefer_attach,
+	user1_id .. sim_common_nbr,
+	(user1_reviews * user2_reviews) AS sim_pref,
 	(1.0 * sim_common_nbr) / (user1_reviews * user2_reviews) AS sim_cosine,
 	(1.0 * sim_common_nbr) / (user1_reviews + user2_reviews) AS sim_jaccard;
 STORE UUG2 into '$Output' using PigStorage('\t', '-schema');

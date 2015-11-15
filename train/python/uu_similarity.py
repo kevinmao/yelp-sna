@@ -6,8 +6,8 @@ from collections import defaultdict
 
 HEADER = ['# user_id', 
           'business_id', 
-          'gamma_u',
-          'gamma_b',
+          'gamma_u1',
+          'gamma_u2',
           'sim_common_nbr',
           'sim_pref',
           'sim_jaccard',
@@ -20,20 +20,17 @@ HEADER = ['# user_id',
 def load_ub_core_train(inputFile):
     User = set()
     Business = set()
-    Edge = set()
-    GroupByBusiness = defaultdict(set)
+    GroupByUser = defaultdict(set)
     with open(inputFile) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
             row = line.strip('\n').split('\t')
             uid = int(row[0])
             bid = int(row[1])
-            e = (uid, bid)
             User.add(uid)
             Business.add(bid)
-            Edge.add(e)
-            GroupByBusiness[bid].add(uid)
-    return User, Business, Edge, GroupByBusiness
+            GroupByUser[uid].add(bid)
+    return User, Business, GroupByUser
     
 def get_co_reviewer(G, User):
     co_reviewer_dict = defaultdict(set)
@@ -62,33 +59,33 @@ def Delta(S, co_reviewer_dict):
         score += 1.0/(a*(a-1))
     return score    
             
-def cal_sim(outputFile, User, Business, Edge, GroupByBusiness, co_reviewer_dict):
+def cal_sim(outputFile, User, Business, GroupByUser, co_reviewer_dict):
     fout =  open(outputFile, 'w')
     fout.write('\t'.join(HEADER))
     fout.write('\n')
-    for u in User:
-        user_coreviewer = co_reviewer_dict[u]
-        gamma_u = len(user_coreviewer)
-        if gamma_u == 0: continue
-        for b in Business:
-            e = (u,b)
-            if e in Edge: continue
-            biz_reviewer = GroupByBusiness[b]
-            gamma_b = len(biz_reviewer)
-            if gamma_b == 0: continue
-            neighbors = biz_reviewer & user_coreviewer
+    for u1 in User:
+        coreviewers = co_reviewer_dict[u1]
+        u1_biz = GroupByUser[u1]
+        gamma_u1 = len(u1_biz)
+        if gamma_u1 == 0: continue
+        for u2 in coreviewers: 
+            if u1 == u2: continue
+            u2_biz = GroupByUser[u2]
+            gamma_u2 = len(u2_biz)
+            if gamma_u2 == 0: continue
+            neighbors = u1_biz & u2_biz
             sim_common_nbr = len(neighbors)
             if sim_common_nbr == 0: continue
-            sim_pref = gamma_u * gamma_b
-            sim_jaccard = 1.0*sim_common_nbr / (gamma_u + gamma_b)
-            sim_cosine = 1.0*sim_common_nbr / (gamma_u * gamma_b)
-            sim_overlap = 1.0*sim_common_nbr / min([gamma_u, gamma_b])
+            sim_pref = gamma_u1 * gamma_u2
+            sim_jaccard = 1.0*sim_common_nbr / (gamma_u1 + gamma_u2)
+            sim_cosine = 1.0*sim_common_nbr / (gamma_u1 * gamma_u2)
+            sim_overlap = 1.0*sim_common_nbr / min([gamma_u1, gamma_u2])
             sim_adamic = Adamic_Adar(neighbors, co_reviewer_dict)
             sim_delta = Delta(neighbors, co_reviewer_dict)
-            L = [u,
-                 b,
-                 gamma_u,
-                 gamma_b,
+            L = [u1,
+                 u2,
+                 gamma_u1,
+                 gamma_u2,
                  sim_common_nbr,
                  sim_pref,
                  sim_jaccard,
@@ -110,13 +107,13 @@ def main(args):
     G = snap.LoadEdgeList(snap.PUNGraph, review_train_core_file, 0, 1)
     
     # load file
-    User, Business, Edge, GroupByBusiness = load_ub_core_train(review_train_core_file)
+    User, Business, GroupByUser = load_ub_core_train(review_train_core_file)
     
     # get co-reviewer
     co_reviewer_dict = get_co_reviewer(G, User)
     
     # calculate metrics
-    cal_sim(ub_similarity_file, User, Business, Edge, GroupByBusiness, co_reviewer_dict)
+    cal_sim(ub_similarity_file, User, Business, GroupByUser, co_reviewer_dict)
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')
