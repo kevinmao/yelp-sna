@@ -1,9 +1,10 @@
 all: transform split_review core_review_sample
 xkeys: user_keys business_keys user_user
 xub: ub_review_all
-xsim: calculate_similarity    
+xsim: calculate_similarity
+xtopn: top_n
 xstats: check_user_biz_review review_per_year
-xplot: degree_dist   
+xplot: degree_dist
 
 xunzip:
 	############################################
@@ -92,6 +93,12 @@ calculate_similarity:
 	### calculate_similarity graph
 	############################################
 	cd train/shell && bash calculate_similarity.sh
+
+top_n:
+	############################################
+	### topn predicted
+	############################################
+	cd train/pig && bash top_n.sh
 
 create_induced_graphs:
 	############################################
