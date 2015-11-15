@@ -1,6 +1,7 @@
 all: transform split_review core_review
 xkeys: user_keys business_keys user_user
 xub: ub_review_all
+xsim: calculate_similarity    
 xstats: check_user_biz_review review_per_year
 xplot: degree_dist   
 
@@ -79,6 +80,12 @@ ub_review_all:
 	### ub_review_all graph
 	############################################
 	cd train/shell && bash ub_review_all.sh
+
+calculate_similarity:
+	############################################
+	### calculate_similarity graph
+	############################################
+	cd train/shell && bash calculate_similarity.sh
 
 create_induced_graphs:
 	############################################

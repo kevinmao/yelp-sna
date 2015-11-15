@@ -37,7 +37,7 @@ UUB = DISTINCT UUB;
 DESCRIBE UUB;
 
 GU12 = GROUP UUB BY (user1_id, user2_id);
-GU12X = FOREACH GU12 GENERATE group.user1_id AS user1_id, group.user2_id AS user2_id, COUNT($1) AS common_reviews;
+GU12X = FOREACH GU12 GENERATE group.user1_id AS user1_id, group.user2_id AS user2_id, COUNT($1) AS sim_common_nbr;
 
 J0 = JOIN UUB BY user1_id, COUNT_BY_USER BY user;
 J1 = FOREACH J0 GENERATE
@@ -61,16 +61,16 @@ J5 = FOREACH J4 GENERATE
 	J3::user2_id AS user2_id,
 	J3::user1_reviews AS user1_reviews,
 	J3::user2_reviews AS user2_reviews,
-	GU12X::common_reviews AS common_reviews
+	GU12X::sim_common_nbr AS sim_common_nbr
 	;
 J5 = DISTINCT J5;
 DESCRIBE J5;
 
 UUG = ORDER J9 BY user1_id_id, user2_id_id;
 UUG2 = FOREACH UUG GENERATE
-	user1_id_id .. common_reviews,
-	(user1_reviews * user2_reviews) AS prefer_attach_sim,
-	(1.0 * common_reviews) / (user1_reviews * user2_reviews) AS cosine_sim,
-	(1.0 * common_reviews) / (user1_reviews + user2_reviews) AS jaccard_sim;
+	user1_id_id .. sim_common_nbr,
+	(user1_reviews * user2_reviews) AS sim_prefer_attach,
+	(1.0 * sim_common_nbr) / (user1_reviews * user2_reviews) AS sim_cosine,
+	(1.0 * sim_common_nbr) / (user1_reviews + user2_reviews) AS sim_jaccard;
 STORE UUG2 into '$Output' using PigStorage('\t', '-schema');
 
