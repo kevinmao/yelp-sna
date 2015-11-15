@@ -9,10 +9,12 @@ HEADER = ['# user_id',
           'gamma_u',
           'gamma_b',
           'sim_common_nbr',
-          'sim_prefer_attach',
-          'sim_adamic',
+          'sim_pref',
           'sim_jaccard',
           'sim_cosine',
+          'sim_overlap',
+          'sim_adamic',
+          'sim_delta',
           ]
 
 def load_ub_core_train(inputFile):
@@ -22,7 +24,7 @@ def load_ub_core_train(inputFile):
     GroupByBusiness = defaultdict(set)
     with open(inputFile) as fin:
         for line in fin:
-            if line.find('# uid') >= 0: continue
+            if line.find('# user_id') >= 0: continue
             row = line.strip('\n').split('\t')
             uid = int(row[0])
             bid = int(row[1])
@@ -49,6 +51,15 @@ def Adamic_Adar(S, co_reviewer_dict):
         nbrVec = co_reviewer_dict[u]
         score += 1.0/np.log(len(nbrVec))
     return score    
+
+def Delta(S, co_reviewer_dict):
+    score = 0.0
+    for u in S:
+        nbrVec = co_reviewer_dict[u]
+        a = len(nbrVec)
+        if a < 1: continue
+        score += 1.0/(a*(a-1))
+    return score    
             
 def cal_sim(outputFile, User, Business, Edge, GroupByBusiness, co_reviewer_dict):
     fout =  open(outputFile, 'w')
@@ -67,19 +78,24 @@ def cal_sim(outputFile, User, Business, Edge, GroupByBusiness, co_reviewer_dict)
             neighbors = biz_reviewer & user_coreviewer
             sim_common_nbr = len(neighbors)
             if sim_common_nbr == 0: continue
+            sim_pref = gamma_u * gamma_b
             sim_jaccard = 1.0*sim_common_nbr / (gamma_u + gamma_b)
-            sim_prefer_attach = gamma_u * gamma_b
             sim_cosine = 1.0*sim_common_nbr / (gamma_u * gamma_b)
+            sim_overlap = 1.0*sim_common_nbr / min([gamma_u, gamma_b])
             sim_adamic = Adamic_Adar(neighbors, co_reviewer_dict)
+            sim_delta = Delta(neighbors, co_reviewer_dict)
             L = [u,
                  b,
                  gamma_u,
                  gamma_b,
                  sim_common_nbr,
-                 sim_prefer_attach,
-                 sim_adamic,
+                 sim_pref,
                  sim_jaccard,
-                 sim_cosine]
+                 sim_cosine,
+                 sim_overlap,
+                 sim_adamic,
+                 sim_delta,
+                 ]
             L = [ str(e) for e in L ]
             fout.write('\t'.join(L))
             fout.write('\n')
