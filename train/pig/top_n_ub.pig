@@ -1,8 +1,8 @@
 -- Default
 %default N 100000
-%default Predicted mf.ub_cross_prod.rating
+%default Predicted ub_similarity.tsv
 %default TestCore ub_review_test_core_edges.tsv
-%default TruePositive mf.rating.tp
+%default TruePositive predict_topn
 
 -- Parallel
 SET default_parallel 10

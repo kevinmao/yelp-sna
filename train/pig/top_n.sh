@@ -3,8 +3,8 @@
 source ../../config.sh
 
 # files
-LocalPredicted=${TRAIN_DATA}/ub_similarity.tsv
-LocalTestCore=${TRAIN_DATA}/ub_review_test_core_edges.tsv
+LocalPredicted=${HDFS_TMP}/ub_similarity.tsv
+LocalTestCore=${HDFS_TMP}/ub_review_test_core_edges.tsv
 
 Predicted=${HDFS_TRAIN_DATA}/ub_similarity.tsv
 TestCore=${HDFS_TRAIN_DATA}/ub_review_test_core_edges.tsv
@@ -22,7 +22,7 @@ hadoop fs -put ${LocalPredicted}.tmp ${Predicted}
 hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
 
 # run
-fpig=top_n_ub_more.pig
+fpig=top_n_ub.pig
 
 pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
 -Dmapred.job.queue.name=gpu \
@@ -35,3 +35,6 @@ pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
 -param TopPredicted=$TopPredicted \
 -param TruePositive=$TruePositive \
 -param N=$N
+
+# clean up
+rm -f ${LocalPredicted}.tmp ${LocalTestCore}.tmp
