@@ -1,7 +1,8 @@
 all: transform split_review core_review
 xkeys: user_keys business_keys user_user
 xub: ub_review_all
-xstats: review_histgram check_user_biz_review
+xstats: check_user_biz_review review_per_year
+xplot: review_histgram  degree_dist   
 
 xunzip:
 	############################################
@@ -45,6 +46,13 @@ review_histgram:
 	### review_histgram
 	############################################
 	cd analysis/shell && bash review_histgram.sh
+
+review_per_year:
+	############################################
+	### review_per_year
+	############################################
+	cd analysis/shell && bash review_per_year.sh
+
 
 degree_dist:
 	############################################

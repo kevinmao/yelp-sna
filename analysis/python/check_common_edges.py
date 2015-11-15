@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import os
 
 """ check overlap of (user, review) pairs in train and test data sets """
 
@@ -9,6 +10,7 @@ def checker(inputFile):
     with open(inputFile) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
+            if line.find('# business_id') >= 0: continue
             line_contents = line.strip('\n').split('\t')
             user_id = line_contents[0]
             business_id = line_contents[1]
@@ -20,13 +22,16 @@ def main(args):
     train_data_file = args.train_data
     test_data_file = args.test_data
 
+    shortname_train = os.path.basename(train_data_file)
+    shortname_test = os.path.basename(test_data_file)
     Train = checker(train_data_file)
     Test = checker(test_data_file)
     Common = Train & Test
         
-    print "Train.(user, review) = ",len(Train)
-    print "Test.(user, review) = ",len(Test)
-    print "Common.(user, review) = ",len(Common)
+    print "(user, business) edges: "
+    print "\t%s: %d" % (shortname_train, len(Train))
+    print "\t%s: %d" % (shortname_test, len(Test))
+    print "\t%s: %d" % ('common', len(Common))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process yelp tip data')

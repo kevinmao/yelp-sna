@@ -4,6 +4,8 @@
 source ../../config.sh 
 mkdir -p ${YELP_DATA_STATS}
 
+LOGGER "START..."
+
 prefix=yelp_academic_dataset
 output=${YELP_DATA_STATS}/stats.tsv
 ftmp=${YELP_DATA_STATS}/stats.tsv.tmp
@@ -24,13 +26,9 @@ ftype=user
 python ${STATS_PYTHON}/check_user.py \
 --input ${YELP_DATA_JSON}/${prefix}_${ftype}.json
 
-echo 
-echo "------------ review per year ------------" 
-cat ${YELP_DATA_TSV}/review.tsv | cut -f4 | grep -v date | cut -d- -f1 | sort | uniq -c | sort -k2 | awk '{print $2"\t"$1}'
-
 echo
-echo "------------ common (user, review) pairs in train and test data ------------"
-python ${STATS_PYTHON}/check_train.py \
+echo "------------ common (user, business) edges in train and test data ------------"
+python ${STATS_PYTHON}/check_common_edges.py \
 --train_data ${YELP_DATA_TSV}/review_train_core.tsv \
 --test_data ${YELP_DATA_TSV}/review_test_core.tsv
 } >> ${ftmp}
