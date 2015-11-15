@@ -1,4 +1,4 @@
-all: transform split_review core_review
+all: transform split_review core_review_sample
 xkeys: user_keys business_keys user_user
 xub: ub_review_all
 xsim: calculate_similarity    
@@ -28,6 +28,12 @@ core_review: split_review
 	### core_review for train and test data
 	############################################
 	cd docprocess/shell && bash core_review.sh
+
+core_review_sample: split_review
+	############################################
+	### core_review_sample for train and test data
+	############################################
+	cd docprocess/shell && bash core_review_sample.sh
 
 generate_graphs:
 	############################################
