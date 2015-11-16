@@ -6,8 +6,8 @@ mkdir -p ${YELP_DATA_STATS}
 
 LOGGER "START..."
 
-ub_similarity=${YELP_DATA_TRAIN}/ub_similarity.tsv
-test_core=${YELP_DATA_TRAIN}/ub_review_test_core_edges.tsv
+ub_similarity=${TRAIN_DATA}/ub_similarity.tsv
+test_core=${TRAIN_DATA}/ub_review_test_core_edges.tsv
 stats=${YELP_DATA_STATS}/stats.tsv
 
 {

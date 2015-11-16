@@ -24,7 +24,7 @@ export DOC_PROCESS_PYTHON=${DOC_PROCESS}/python
 export DOC_PROCESS_PIG=${DOC_PROCESS}/pig
 
 ## corpus data 
-export DATA_ROOT=${PROJECT_HOME}/yelp_data
+export DATA_ROOT=${PROJECT_HOME}/data
 
 ## yelp data zipped
 export YELP_DATA_ZIP=${DATA_ROOT}/raw/zip
@@ -57,9 +57,9 @@ export MF_DATA=${DATA_ROOT}/mf
 ### Hadoop HDFS
 ############################################
 export HDFS_PRJ_HOME=/user/$USER/${PRJ_NAME}
-export HDFS_YELP_DATA_TSV=${HDFS_PRJ_HOME}/yelp_data/tsv
-export HDFS_TRAIN_DATA=${HDFS_PRJ_HOME}/yelp_data/train
-export HDFS_TEST_DATA=${HDFS_PRJ_HOME}/yelp_data/test
+export HDFS_YELP_DATA_TSV=${HDFS_PRJ_HOME}/data/tsv
+export HDFS_TRAIN_DATA=${HDFS_PRJ_HOME}/data/train
+export HDFS_TEST_DATA=${HDFS_PRJ_HOME}/data/test
 export HDFS_TMP=/grid/0/tmp/$USER
 
 ############################################
