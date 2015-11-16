@@ -53,9 +53,10 @@ def main(args):
     GTest = snap.LoadEdgeList(snap.PUNGraph, ub_review_test_core_file, 0, 1)
 
     # parameters    
-    GVec = [G, GTrain, GTest]
+    # GVec = [G, GTrain, GTest]
+    GVec = [G]
     colors = ['red', 'blue', 'green']
-    labels = ['All', 'Train', 'Test']
+    labels = ['All Reviews', 'Train Reviews', 'Test Reviews']
 
     # plot
     loglog_plot(GVec, colors, labels, degree_dist_plot_file)

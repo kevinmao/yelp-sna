@@ -6,6 +6,7 @@
 .project
 .pydevproject
 .settings
-octave-workspace
 logs/
+octave-workspace
 test/
+report/
