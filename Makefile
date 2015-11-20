@@ -1,6 +1,7 @@
-all: transform split_review core_review_sample
+all: transform split_review
 xkeys: user_keys business_keys user_user
-xub: ub_review_all
+xub: ub_review
+# xcore: core_review core_review_sample
 xsim: ub_similarity
 xtopn: top_n
 xstats: check_user_biz_review review_per_year
@@ -91,11 +92,11 @@ business_keys:
 	############################################
 	cd train/shell && bash business_keys.sh
 
-ub_review_all:
+ub_review:
 	############################################
-	### ub_review_all graphs
+	### ub_review graphs
 	############################################
-	cd train/shell && bash ub_review_all.sh
+	cd train/shell && bash ub_review.sh
 
 ub_similarity:
 	############################################
