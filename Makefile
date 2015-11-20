@@ -4,7 +4,7 @@ xub: ub_review
 # xcore: core_review core_review_sample
 xsim: ub_similarity
 xtopn: top_n
-xstats: check_user_biz_review review_per_year
+xstats: check_user_review review_per_year
 xgraph: graph_info
 xplot: degree_dist
 
@@ -45,11 +45,11 @@ generate_graphs:
 	cd docprocess/pig && bash generate_graphs.sh
 
 
-check_user_biz_review: split_review
+check_user_review: split_review
 	############################################
-	### check_user_biz_review
+	### check_user_review
 	############################################
-	cd analysis/shell && bash check_user_biz_review.sh
+	cd analysis/shell && bash check_user_review.sh
 
 
 review_per_year:
