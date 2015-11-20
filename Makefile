@@ -31,7 +31,7 @@ core_review: split_review
 	############################################
 	cd docprocess/shell && bash core_review.sh
 
-core_review_sample: split_review
+core_review_sample: core_review
 	############################################
 	### core_review_sample for train and test data
 	############################################
