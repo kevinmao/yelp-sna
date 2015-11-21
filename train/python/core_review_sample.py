@@ -2,9 +2,7 @@
 
 import random
 import argparse
-from collections import defaultdict
 
-MIN_DEGREE = 5
 SAMPLE_RATE = 0.01
 random.seed(50)
 
@@ -23,8 +21,6 @@ def ub_core_train(inputFile, SelectedUser):
     User = set()
     Business = set()
     Edge = set()
-    UserDegree = defaultdict(int)
-    BusinessDegree = defaultdict(int)
     with open(inputFile) as fin:
         for line in fin:
             if line.find('# user_id') >= 0: continue
@@ -36,21 +32,7 @@ def ub_core_train(inputFile, SelectedUser):
             User.add(user_id)
             Business.add(business_id)
             Edge.add(e)
-            UserDegree[user_id] += 1
-            BusinessDegree[business_id] += 1
-    # core user
-    print "len(User), len(Business) = %d, %d" % (len(User), len(Business))
-    Core_User = set()
-    for u in User:
-        if UserDegree[u] < MIN_DEGREE: continue
-        Core_User.add(u)
-    # core business
-    Core_Business = set()
-    for b in Business:
-        if BusinessDegree[b] < MIN_DEGREE: continue
-        Core_Business.add(b)
-    print "len(Core_User), len(Core_Business) = %d, %d" % (len(Core_User), len(Core_Business))
-    return Core_User, Core_Business, Edge
+    return User, Business, Edge
 
 def core_review_train(inputFile, outputFile, Core_User, Core_Business):
     seen_edge = set()

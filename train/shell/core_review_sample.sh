@@ -2,12 +2,12 @@
 
 # global vars
 source ../../config.sh 
-mkdir -p ${YELP_DATA_TSV}
+mkdir -p ${TRAIN_DATA}
 
-Train=${YELP_DATA_TSV}/review_train.tsv
-Test=${YELP_DATA_TSV}/review_test.tsv
-TrainCore=${YELP_DATA_TSV}/review_train_core.tsv
-TestCore=${YELP_DATA_TSV}/review_test_core.tsv
+Train=${TRAIN_DATA}/ub_review_train_core_all_edges.tsv
+Test=${TRAIN_DATA}/ub_review_test_core_all_edges.tsv
+TrainCore=${TRAIN_DATA}/ub_review_train_core_edges.tsv
+TestCore=${TRAIN_DATA}/ub_review_test_core_edges.tsv
 
 LOGGER "Start..."
 rm -f ${TrainCore} ${TestCore}

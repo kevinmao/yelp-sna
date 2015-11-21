@@ -1,7 +1,10 @@
-all: transform split_review
+all: prepare xkeys ub_review get_maxwcc xcore
+
+prepare: transform split_review
 xkeys: user_keys business_keys user_user
-xub: ub_review
-# xcore: core_review core_review_sample
+xcore: core_review core_review_sample
+
+
 xsim: ub_similarity
 xtopn: top_n
 xstats: check_user_review review_per_year
@@ -26,17 +29,50 @@ split_review:
 	############################################
 	cd docprocess/shell && bash split_review.sh
 
-core_review: split_review
+user_keys:
+	############################################
+	### user keys
+	############################################
+	cd train/shell && bash user_keys.sh
+
+business_keys:
+	############################################
+	### business keys
+	############################################
+	cd train/shell && bash business_keys.sh
+
+user_user:
+	############################################
+	### user user graph
+	############################################
+	cd train/shell && bash user_user.sh
+
+ub_review:
+	############################################
+	### ub_review graphs
+	############################################
+	cd train/shell && bash ub_review.sh
+
+get_maxwcc:
+	############################################
+	### get_maxwcc
+	############################################
+	cd train/shell && bash get_maxwcc.sh
+
+
+
+####
+core_review:
 	############################################
 	### core_review for train and test data
 	############################################
-	cd docprocess/shell && bash core_review.sh
+	cd train/shell && bash core_review.sh
 
-core_review_sample: core_review
+core_review_sample:
 	############################################
 	### core_review_sample for train and test data
 	############################################
-	cd docprocess/shell && bash core_review_sample.sh
+	cd train/shell && bash core_review_sample.sh
 
 generate_graphs:
 	############################################
@@ -45,7 +81,7 @@ generate_graphs:
 	cd docprocess/pig && bash generate_graphs.sh
 
 
-check_user_review: split_review
+check_user_review:
 	############################################
 	### check_user_review
 	############################################
@@ -74,29 +110,6 @@ degree_dist:
 	cd analysis/shell && bash degree_dist.sh
 
 
-user_keys:
-	############################################
-	### user keys
-	############################################
-	cd train/shell && bash user_keys.sh
-
-user_user:
-	############################################
-	### user user graph
-	############################################
-	cd train/shell && bash user_user.sh
-
-business_keys:
-	############################################
-	### business keys
-	############################################
-	cd train/shell && bash business_keys.sh
-
-ub_review:
-	############################################
-	### ub_review graphs
-	############################################
-	cd train/shell && bash ub_review.sh
 
 ub_similarity:
 	############################################
