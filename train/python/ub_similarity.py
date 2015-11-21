@@ -4,6 +4,8 @@ import snap
 import numpy as np
 from collections import defaultdict
 
+MIN_COMMON_NEIGHBOR = 2
+
 HEADER = ['# user_id', 
           'business_id', 
           'gamma_u',
@@ -78,7 +80,7 @@ def cal_sim(outputFile, User, Business, Edge, GroupByBusiness, co_reviewer_dict)
             if gamma_b == 0: continue
             neighbors = biz_reviewer & user_coreviewer
             sim_common_nbr = len(neighbors)
-            if sim_common_nbr == 0: continue
+            if sim_common_nbr < MIN_COMMON_NEIGHBOR: continue
             sim_pref = gamma_u * gamma_b
             sim_jaccard = 1.0*sim_common_nbr / (gamma_u + gamma_b)
             sim_cosine = 1.0*sim_common_nbr / (gamma_u * gamma_b)

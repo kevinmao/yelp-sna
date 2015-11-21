@@ -33,7 +33,7 @@ def loglog_plot(GVec, colors, labels, outfile, isLoglog = True):
 
     # add legend, etc
     plt.legend()
-    plt.title('Review Graph Degree Distribution')
+    plt.title('Degree Distribution')
     plt.xlabel('degree')
     plt.ylabel("fraction of nodes")
     plt.grid()
