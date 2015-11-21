@@ -2,13 +2,13 @@ all: prepare xkeys ub_review get_maxwcc xcore
 
 prepare: transform split_review
 xkeys: user_keys business_keys user_user
+xgraph: graph_info
 xcore: core_review core_review_sample
 
 
 xsim: ub_similarity
 xtopn: top_n
 xstats: check_user_review review_per_year
-xgraph: graph_info
 xplot: degree_dist
 
 xunzip:

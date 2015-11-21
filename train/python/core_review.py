@@ -4,7 +4,7 @@ import argparse
 from collections import defaultdict
 
 MIN_DEGREE_USER = 5
-MIN_DEGREE_BUSINESS = 10
+MIN_DEGREE_BUSINESS = 5
 
 def ub_core_train(inputFile):
     User = set()
