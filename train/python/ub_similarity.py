@@ -56,7 +56,7 @@ def Adamic_Adar(S, co_reviewer_dict):
     score = 0.0
     for u in S:
         nbrVec = co_reviewer_dict[u]
-        if len(nbrVec) < 1: continue
+        if len(nbrVec) < 2: continue
         score += 1.0/np.log(len(nbrVec))
     return score    
 
@@ -65,7 +65,7 @@ def Delta(S, co_reviewer_dict):
     for u in S:
         nbrVec = co_reviewer_dict[u]
         a = len(nbrVec)
-        if a < 1: continue
+        if a < 2: continue
         score += 1.0/(a*(a-1))
     return score    
             
