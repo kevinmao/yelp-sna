@@ -23,6 +23,7 @@ hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
 fpig=top_n_ub.pig
 for i in `seq 0 5 50`; do
     WDIR=${HDFS_PRJ_HOME}/out.ge${i}
+    hadoop fs -rm -r -skipTrash ${WDIR}
     hadoop fs -mkdir -p ${WDIR}
     TopPredicted=${WDIR}/predict_topn
     TruePositive=${WDIR}/predict_topn.TP
