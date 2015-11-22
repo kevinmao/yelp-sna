@@ -4,7 +4,12 @@ import snap
 import numpy as np
 from collections import defaultdict
 
-MIN_COMMON_NEIGHBOR = 2
+""" generate all the possible user-business pairs
+    and perform MIN_COMMON_NEIGHBOR based filtering
+    on the grid instead
+"""
+
+MIN_COMMON_NEIGHBOR = 1
 
 HEADER = ['# user_id', 
           'business_id', 
