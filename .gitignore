@@ -10,3 +10,5 @@ logs/
 octave-workspace
 test/
 report/
+data/*.milestone/
+*.tar

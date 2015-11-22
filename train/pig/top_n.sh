@@ -17,8 +17,8 @@ cat ${LocalPredicted} | grep -v 'user_id' > ${LocalPredicted}.tmp
 cat ${LocalTestCore} | grep -v 'user_id' > ${LocalTestCore}.tmp
 N=$(cat $LocalTestCore | grep -v 'user_id' | wc -l)
 
-hadoop fs -mkdir -p ${HDFS_PRJ_HOME
-hadoop fs -rm -r -skipTrash ${TruePositive}* ${TopPredicted}* >/dev/null 2>&1
+hadoop fs -mkdir -p ${HDFS_PRJ_HOME}
+hadoop fs -rm -r -skipTrash ${Predicted} ${TestCore} ${TruePositive}* ${TopPredicted}* >/dev/null 2>&1
 hadoop fs -put ${LocalPredicted}.tmp ${Predicted}
 hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
 

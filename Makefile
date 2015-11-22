@@ -1,12 +1,13 @@
 all: prepare xkeys ub_review get_maxwcc xcore
 xstats: xgraph xcheck xplot
+xsim: ub_similarity
+xtopn: top_n
+xpredicted: predicted_topn
  
+
 prepare: transform split_review
 xkeys: user_keys business_keys user_user
 xcore: core_review core_review_sample
-
-xsim: ub_similarity
-xtopn: top_n
 
 xgraph: graph_info
 xcheck: check_user_review review_per_year
@@ -82,6 +83,7 @@ generate_graphs:
 	cd docprocess/pig && bash generate_graphs.sh
 
 
+###
 check_user_review:
 	############################################
 	### check_user_review
@@ -96,7 +98,6 @@ review_per_year:
 	cd analysis/shell && bash review_per_year.sh
 
 
-#
 graph_info:
 	############################################
 	### graph_info
@@ -109,6 +110,12 @@ degree_dist:
 	### degree_dist
 	############################################
 	cd analysis/shell && bash degree_dist.sh
+
+histgram:
+	############################################
+	### histgram
+	############################################
+	cd analysis/shell && bash histgram.sh
 
 
 
