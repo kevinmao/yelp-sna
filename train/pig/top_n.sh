@@ -3,20 +3,20 @@
 source ../../config.sh
 
 # files
-LocalPredicted=${HDFS_TMP}/ub_similarity.tsv
+LocalLinkCand=${HDFS_TMP}/ub_similarity.tsv
 LocalTestCore=${HDFS_TMP}/ub_review_test_core_edges.tsv
 
-Predicted=${HDFS_TRAIN_DATA}/ub_similarity.tsv
+LinkCand=${HDFS_TRAIN_DATA}/ub_similarity.tsv
 TestCore=${HDFS_TRAIN_DATA}/ub_review_test_core_edges.tsv
 
 # put onto hdfs
-cat ${LocalPredicted} | grep -v 'user_id' > ${LocalPredicted}.tmp
+cat ${LocalLinkCand} | grep -v 'user_id' > ${LocalLinkCand}.tmp
 cat ${LocalTestCore} | grep -v 'user_id' > ${LocalTestCore}.tmp
 N=$(cat $LocalTestCore | grep -v 'user_id' | wc -l)
 
 hadoop fs -mkdir -p ${HDFS_PRJ_HOME}
-hadoop fs -rm -r -skipTrash ${Predicted} ${TestCore} ${TruePositive}* ${TopPredicted}* >/dev/null 2>&1
-hadoop fs -put ${LocalPredicted}.tmp ${Predicted}
+hadoop fs -rm -r -skipTrash ${LinkCand} ${TestCore} ${PredictedTopN}* ${LinkCand}* >/dev/null 2>&1
+hadoop fs -put ${LocalLinkCand}.tmp ${LinkCand}
 hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
 
 # run
@@ -26,8 +26,8 @@ for min_com_nbr in `echo $min_com_nbr_list`; do
     WDIR=${HDFS_PRJ_HOME}/out.ge.${min_com_nbr}
     hadoop fs -rm -r -skipTrash ${WDIR}
     hadoop fs -mkdir -p ${WDIR}
-    TopPredicted=${WDIR}/predict_topn
-    TruePositive=${WDIR}/predict_topn.TP
+    LinkCand=${WDIR}/link_cand
+    PredictedTopN=${WDIR}/predicted_topn
 
     pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
     -Dmapred.job.queue.name=gpu \
@@ -35,13 +35,12 @@ for min_com_nbr in `echo $min_com_nbr_list`; do
     -Dmapred.reduce.tasks.speculative.execution=true \
     -Dmapred.job.map.memory.mb=4096 \
     -Dmapred.job.reduce.memory.mb=4096 \
-    -param Predicted=$Predicted \
     -param TestCore=$TestCore \
-    -param TopPredicted=$TopPredicted \
-    -param TruePositive=$TruePositive \
+    -param LinkCand=$LinkCand \
+    -param PredictedTopN=$PredictedTopN \
     -param N=$N \
     -param MIN_COM_NBR=$min_com_nbr
 done
 
 # clean up
-rm -f ${LocalPredicted}.tmp ${LocalTestCore}.tmp
+rm -f ${LocalLinkCand}.tmp ${LocalTestCore}.tmp
