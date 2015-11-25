@@ -2,40 +2,33 @@
 
 # global vars
 source ../../config.sh 
-mkdir -p ${PREDICT_DATA}
 
-# user_id business_id gamma_u gamma_b sim_common_nbr sim_pref sim_jaccard sim_cosine sim_overlap sim_adamic sim_delta
+OUTDIR=${PREDICT_DATA}/topn
+mkdir -p ${OUTDIR}
 
-suffix=edges.tsv
-Header=${PREDICT_DATA}/ub_sim_header
+outge=out.ge
+prefix=predict_topn
+suffix=tsv
 
 MetricsList="common_nbr pref jaccard cosine overlap adamic delta"
+min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
-LOGGER "Start..."
-let i=4
-for m in `echo ${MetricsList}`; do
-    LOGGER "Processing $m"
-    let i=i+1
-    ftmp=tmp.$(date +%s)
+for metric in `echo ${MetricsList}`; do
+    F=${prefix}.${metric}
+    subfolder=${prefix}.TP.${metric}
+    for min_com_nbr in `echo $min_com_nbr_list`; do
+        folder=${HDFS_DATA}/${outge}.${min_com_nbr}
+        fin=${folder}/${subfolder}
+        Header=${fin}/.pig_header
 
-    # predicted
-    F=predict_topn.$m
-    fin=${HDFS_DATA}/$F
-    fou=${PREDICT_DATA}/$F
-    cat ${fin}/part-* > ${ftmp}.p
-    cat ${Header} ${ftmp}.p | cut -f1,2,$i > ${fou}
-    
-    # predicted TP
-    F=predict_topn.TP.$m
-    fin=${HDFS_DATA}/$F
-    fou=${PREDICT_DATA}/$F
-    cat ${fin}/part-* > ${ftmp}.tp
-    printf "%s\t%s\t%s" "# user_id" "business_id" "$m" > ${ftmp}.h
-    cat ${ftmp}.h ${ftmp}.tp > ${fou}
+        fou=${OUTDIR}/${F}.T${min_com_nbr}.${suffix}
+        if [ -d $folder ]; then
+            LOGGER "Processing ${fin}"
+            rm -f ${fou}
+            cp ${Header} ${fou}
+            cat ${fin}/part-* >> ${fou}
+        fi    
+    done
 done
-rm -f tmp.*
-
-# remove overlap and cosine for bad performance
-rm -f ${PREDICT_DATA}/*{overlap,cosine}*
 
 LOGGER "Done."

@@ -2,7 +2,7 @@ all: prepare xkeys ub_review get_maxwcc xcore
 xstats: xgraph xcheck xplot
 xsim: ub_similarity
 xtopn: top_n
-xpredicted: predicted_topn
+xpredicted: predicted_topn predicted_tp
  
 
 prepare: transform split_review
@@ -136,6 +136,12 @@ predicted_topn:
 	### predicted_topn
 	############################################
 	cd train/shell && bash predicted_topn.sh
+
+predicted_tp:
+	############################################
+	### predicted_tp
+	############################################
+	cd train/shell && bash predicted_tp.sh
 
 create_induced_graphs:
 	############################################

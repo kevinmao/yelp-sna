@@ -2,31 +2,50 @@
 
 # global vars
 source ../../config.sh 
-mkdir -p ${PREDICT_DATA}
+
+OUTDIR=${PREDICT_DATA}/summary
+mkdir -p ${OUTDIR}
 
 outge=out.ge
 prefix=predict_topn.TP
 suffix=tsv
-Header=${PREDICT_DATA}/ub_sim_header
 
 MetricsList="common_nbr pref jaccard cosine overlap adamic delta"
-mim_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50"
-
+min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
 for metric in `echo ${MetricsList}`; do
     F=${prefix}.${metric}
     subfolder=${F}
-    fou=${PREDICT_DATA}/${F}.${suffix}
+    fou=${OUTDIR}/${F}.${suffix}
     rm -f ${fou}
-    printf "%s\t%s\n" "threshold" "tp" > ${fou}
-    for mim_com_nbr in `echo $mim_com_nbr_list`; do
-        folder=${HDFS_DATA}/${outge}.${mim_com_nbr}
+    lbl=tp_${metric}
+    printf "%s\t%s\n" "threshold" "${lbl}" > ${fou}
+    for min_com_nbr in `echo $min_com_nbr_list`; do
+        folder=${HDFS_DATA}/${outge}.${min_com_nbr}
         fin=${folder}/${subfolder}
-
-        # predicted TP
-        LOGGER "Processing ${folder}/${subfolder}"
-        tp=$(cat ${fin}/part-* | awk '($4==1) {print $0}' | wc -l)
-        printf "%d\t%d\n" "${mim_com_nbr}" "${tp}" >> ${fou}
+        if [ -d $folder ]; then
+            # predicted TP
+            LOGGER "Processing ${folder}/${subfolder}"
+            tp=$(cat ${fin}/part-* | awk '($4==1) {print $0}' | wc -l)
+            printf "%d\t%d\n" "${min_com_nbr}" "${tp}" >> ${fou}
+        fi    
     done
 done
+
+# combine
+fout=${OUTDIR}/${prefix}.${suffix}
+mv ${OUTDIR}/${prefix}.common_nbr.${suffix} ${fout}
+for metric in `echo ${MetricsList}`; do
+    if [ "$metric" == "common_nbr" ]; then
+        continue
+    fi    
+    ftmp=tmp.`date +%s`
+    F=${OUTDIR}/${prefix}.${metric}.${suffix}
+    cat $F | cut -f2 > ${ftmp}.1
+    paste ${fout} ${ftmp}.1 > ${ftmp}.2
+    mv ${ftmp}.2 ${fout}
+    rm -f $F ${ftmp}*
+done
+
+
 LOGGER "Done."
