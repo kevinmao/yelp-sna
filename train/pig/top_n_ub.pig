@@ -1,5 +1,6 @@
 -- Default
-%default N 100000
+%default TOPN 100000
+%default SAMPLE_RATE 0.001
 %default MIN_COM_NBR 5
 %default Predicted ub_similarity.tsv
 %default TestCore ub_review_test_core_edges.tsv
@@ -29,7 +30,7 @@ Predicted = FILTER Predicted BY sim_common_nbr >= $MIN_COM_NBR;
 PredictedGrouped = GROUP Predicted ALL;
 PredictedSummary = FOREACH PredictedGrouped GENERATE
     (long) $MIN_COM_NBR AS threshold,
-    (long) $N AS num_link_topn,
+    (long) $TOPN AS num_link_topn,
     COUNT($1) AS num_link_cand;
 STORE PredictedSummary into '$TopPredicted.summary' using PigStorage('\t', '-schema');
 
@@ -44,7 +45,7 @@ TestCore = LOAD '$TestCore' AS (
 -- common_nbr
 --
 common_nbr = ORDER Predicted BY sim_common_nbr DESC, user_id, business_id;
-top_common_nbr = LIMIT common_nbr $N;
+top_common_nbr = LIMIT common_nbr $TOPN;
 J = JOIN top_common_nbr BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_common_nbr::user_id, 
@@ -59,7 +60,7 @@ STORE TruePositive into '$TruePositive.common_nbr' using PigStorage('\t', '-sche
 -- pref
 --
 pref = ORDER Predicted BY sim_pref DESC, user_id, business_id;
-top_pref = LIMIT pref $N;
+top_pref = LIMIT pref $TOPN;
 J = JOIN top_pref BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_pref::user_id, 
@@ -73,7 +74,7 @@ STORE TruePositive into '$TruePositive.pref' using PigStorage('\t', '-schema');
 -- jaccard
 --
 jaccard = ORDER Predicted BY sim_jaccard DESC, user_id, business_id;
-top_jaccard = LIMIT jaccard $N;
+top_jaccard = LIMIT jaccard $TOPN;
 J = JOIN top_jaccard BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_jaccard::user_id, 
@@ -87,7 +88,7 @@ STORE TruePositive into '$TruePositive.jaccard' using PigStorage('\t', '-schema'
 -- cosine
 --
 cosine = ORDER Predicted BY sim_cosine DESC, user_id, business_id;
-top_cosine = LIMIT cosine $N;
+top_cosine = LIMIT cosine $TOPN;
 J = JOIN top_cosine BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_cosine::user_id, 
@@ -102,7 +103,7 @@ STORE TruePositive into '$TruePositive.cosine' using PigStorage('\t', '-schema')
 -- overlap
 --
 overlap = ORDER Predicted BY sim_overlap DESC, user_id, business_id;
-top_overlap = LIMIT overlap $N;
+top_overlap = LIMIT overlap $TOPN;
 J = JOIN top_overlap BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_overlap::user_id, 
@@ -117,7 +118,7 @@ STORE TruePositive into '$TruePositive.overlap' using PigStorage('\t', '-schema'
 -- adamic
 --
 adamic = ORDER Predicted BY sim_adamic DESC, user_id, business_id;
-top_adamic = LIMIT adamic $N;
+top_adamic = LIMIT adamic $TOPN;
 J = JOIN top_adamic BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_adamic::user_id, 
@@ -132,7 +133,7 @@ STORE TruePositive into '$TruePositive.adamic' using PigStorage('\t', '-schema')
 -- delta
 --
 delta = ORDER Predicted BY sim_delta DESC, user_id, business_id;
-top_delta = LIMIT delta $N;
+top_delta = LIMIT delta $TOPN;
 J = JOIN top_delta BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 TruePositive = FOREACH J GENERATE
     top_delta::user_id, 
