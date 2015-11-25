@@ -51,6 +51,6 @@ cat ${fcov} | cut -f2 > ${ftmp}.1
 paste ${fsum} ${ftmp}.1 > ${ftmp}.2
 mv ${ftmp}.2 ${fsum}
 
-rm -f ${ftmp}*
+rm -f ${ftmp}* ${fcov}
 
 LOGGER "Done."
