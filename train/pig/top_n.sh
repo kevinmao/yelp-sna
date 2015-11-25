@@ -26,7 +26,7 @@ for min_com_nbr in `echo $min_com_nbr_list`; do
     WDIR=${HDFS_PRJ_HOME}/out.ge.${min_com_nbr}
     hadoop fs -rm -r -skipTrash ${WDIR}
     hadoop fs -mkdir -p ${WDIR}
-    LinkCand=${WDIR}/link_cand
+    LinkCandPruned=${WDIR}/link_cand
     PredictedTopN=${WDIR}/predicted_topn
 
     pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
@@ -37,8 +37,9 @@ for min_com_nbr in `echo $min_com_nbr_list`; do
     -Dmapred.job.reduce.memory.mb=4096 \
     -param TestCore=$TestCore \
     -param LinkCand=$LinkCand \
+    -param LinkCandPruned=$LinkCandPruned \
     -param PredictedTopN=$PredictedTopN \
-    -param N=$N \
+    -param TOPN=$N \
     -param MIN_COM_NBR=$min_com_nbr
 done
 

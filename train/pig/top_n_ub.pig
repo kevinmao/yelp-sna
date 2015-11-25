@@ -3,6 +3,7 @@
 %default MIN_COM_NBR 5
 %default LinkCand ub_similarity.tsv
 %default TestCore ub_review_test_core_edges.tsv
+%default LinkCandPruned link_cand
 %default PredictedTopN predicted_topn
 
 -- Parallel
@@ -25,15 +26,15 @@ LinkCand = LOAD '$LinkCand' AS (
     sim_delta           : double
 );
 LinkCand = DISTINCT LinkCand;
-LinkCand = FILTER LinkCand BY sim_common_nbr >= $MIN_COM_NBR;
-STORE LinkCand into '$LinkCand' using PigStorage('\t', '-schema');
+LinkCandPruned = FILTER LinkCand BY sim_common_nbr >= $MIN_COM_NBR;
+STORE LinkCandPruned into '$LinkCandPruned' using PigStorage('\t', '-schema');
 
-LinkCandGrouped = GROUP LinkCand ALL;
-LinkCandSummary = FOREACH LinkCandGrouped GENERATE
+LinkCandPrunedGrouped = GROUP LinkCandPruned ALL;
+LinkCandPrunedSummary = FOREACH LinkCandPrunedGrouped GENERATE
     (long) $MIN_COM_NBR AS threshold,
     (long) $TOPN AS num_link_topn,
     COUNT($1) AS num_link_cand;
-STORE LinkCandSummary into '$LinkCand.summary' using PigStorage('\t', '-schema');
+STORE LinkCandPrunedSummary into '$LinkCandPruned.summary' using PigStorage('\t', '-schema');
 
 TestCore = LOAD '$TestCore' AS (
     user_id          : long,
@@ -44,8 +45,8 @@ TestCore = LOAD '$TestCore' AS (
 --
 -- random
 --
-A = FOREACH LinkCandGrouped GENERATE COUNT(LinkCand) as num_rows;
-random = SAMPLE LinkCand 0.0005+$TOPN/(double)A.num_rows;
+A = FOREACH LinkCandPrunedGrouped GENERATE COUNT(LinkCandPruned) as num_rows;
+random = SAMPLE LinkCandPruned 0.0005+$TOPN/(double)A.num_rows;
 top_random = LIMIT random $TOPN;
 J = JOIN top_random BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -59,7 +60,7 @@ STORE PredictedTopN into '$PredictedTopN.random' using PigStorage('\t', '-schema
 --
 -- common_nbr
 --
-common_nbr = ORDER LinkCand BY sim_common_nbr DESC, user_id, business_id;
+common_nbr = ORDER LinkCandPruned BY sim_common_nbr DESC, user_id, business_id;
 top_common_nbr = LIMIT common_nbr $TOPN;
 J = JOIN top_common_nbr BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -74,7 +75,7 @@ STORE PredictedTopN into '$PredictedTopN.common_nbr' using PigStorage('\t', '-sc
 --
 -- pref
 --
-pref = ORDER LinkCand BY sim_pref DESC, user_id, business_id;
+pref = ORDER LinkCandPruned BY sim_pref DESC, user_id, business_id;
 top_pref = LIMIT pref $TOPN;
 J = JOIN top_pref BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -88,7 +89,7 @@ STORE PredictedTopN into '$PredictedTopN.pref' using PigStorage('\t', '-schema')
 --
 -- jaccard
 --
-jaccard = ORDER LinkCand BY sim_jaccard DESC, user_id, business_id;
+jaccard = ORDER LinkCandPruned BY sim_jaccard DESC, user_id, business_id;
 top_jaccard = LIMIT jaccard $TOPN;
 J = JOIN top_jaccard BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -102,7 +103,7 @@ STORE PredictedTopN into '$PredictedTopN.jaccard' using PigStorage('\t', '-schem
 --
 -- cosine
 --
-cosine = ORDER LinkCand BY sim_cosine DESC, user_id, business_id;
+cosine = ORDER LinkCandPruned BY sim_cosine DESC, user_id, business_id;
 top_cosine = LIMIT cosine $TOPN;
 J = JOIN top_cosine BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -117,7 +118,7 @@ STORE PredictedTopN into '$PredictedTopN.cosine' using PigStorage('\t', '-schema
 --
 -- overlap
 --
-overlap = ORDER LinkCand BY sim_overlap DESC, user_id, business_id;
+overlap = ORDER LinkCandPruned BY sim_overlap DESC, user_id, business_id;
 top_overlap = LIMIT overlap $TOPN;
 J = JOIN top_overlap BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -132,7 +133,7 @@ STORE PredictedTopN into '$PredictedTopN.overlap' using PigStorage('\t', '-schem
 --
 -- adamic
 --
-adamic = ORDER LinkCand BY sim_adamic DESC, user_id, business_id;
+adamic = ORDER LinkCandPruned BY sim_adamic DESC, user_id, business_id;
 top_adamic = LIMIT adamic $TOPN;
 J = JOIN top_adamic BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE
@@ -147,7 +148,7 @@ STORE PredictedTopN into '$PredictedTopN.adamic' using PigStorage('\t', '-schema
 --
 -- delta
 --
-delta = ORDER LinkCand BY sim_delta DESC, user_id, business_id;
+delta = ORDER LinkCandPruned BY sim_delta DESC, user_id, business_id;
 top_delta = LIMIT delta $TOPN;
 J = JOIN top_delta BY (user_id, business_id) left outer, TestCore BY (user_id, business_id);
 PredictedTopN = FOREACH J GENERATE

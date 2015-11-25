@@ -7,12 +7,13 @@ OUTDIR=${PREDICT_DATA}/summary
 mkdir -p ${OUTDIR}
 
 outge=out.ge
-prefix=predict_topn.TP
+prefix=predicted_topn
 suffix=tsv
 
 MetricsList="common_nbr pref jaccard cosine overlap adamic delta"
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
+# each metrics
 for metric in `echo ${MetricsList}`; do
     F=${prefix}.${metric}
     subfolder=${F}
@@ -33,7 +34,7 @@ for metric in `echo ${MetricsList}`; do
 done
 
 # combine
-fout=${OUTDIR}/${prefix}.${suffix}
+fout=${OUTDIR}/${prefix}.TP.${suffix}
 mv ${OUTDIR}/${prefix}.common_nbr.${suffix} ${fout}
 for metric in `echo ${MetricsList}`; do
     if [ "$metric" == "common_nbr" ]; then
