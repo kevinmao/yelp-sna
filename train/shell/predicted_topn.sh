@@ -4,13 +4,16 @@
 source ../../config.sh 
 
 OUTDIR=${PREDICT_DATA}/topn
+[[ -n "$1" ]] && OUTDIR=${PREDICT_DATA}/$1_topn
 mkdir -p ${OUTDIR}
 
 outge=out.ge
+[[ -n "$1" ]] && outge=$1.out.ge
+
 prefix=predicted_topn
 suffix=tsv
 
-MetricsList="common_nbr pref jaccard cosine overlap adamic delta random"
+MetricsList="common_nbr pref jaccard cosine overlap adamic delta random pstars"
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
 for metric in `echo ${MetricsList}`; do
@@ -22,7 +25,7 @@ for metric in `echo ${MetricsList}`; do
         Header=${fin}/.pig_header
 
         fou=${OUTDIR}/${F}.T${min_com_nbr}.${suffix}
-        if [ -d $folder ]; then
+        if [ -d $fin ]; then
             LOGGER "Processing ${fin}"
             rm -f ${fou}
             cp ${Header} ${fou}

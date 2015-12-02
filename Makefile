@@ -1,10 +1,18 @@
-all: prepare xkeys ub_review get_maxwcc xcore
+### ----------------------------------------------------
+xprepare: prepare xkeys ub_review get_maxwcc xcore
 xstats: xgraph xcheck xplot
 xsim: ub_similarity
-xtopn: top_n
-xpredicted: predicted_topn predicted_tp
-xcand: link_cand_summary
 
+### ----------------------------------------------------
+xtopn: top_n
+xpredicted: predicted_topn predicted_tp link_cand_summary
+
+### ----------------------------------------------------
+xmf: create_mf_data mf_train mf_predict
+xmftopn: top_n_mf
+xmfpredicted: mf_predicted_topn mf_predicted_tp mf_link_cand_summary
+
+### ----------------------------------------------------
 prepare: transform split_review
 xkeys: user_keys business_keys user_user
 xcore: core_review core_review_sample
@@ -12,9 +20,6 @@ xcore: core_review core_review_sample
 xgraph: graph_info
 xcheck: check_user_review review_per_year
 xplot: degree_dist
-
-xmf: create_mf_data mf_train mf_predict
-
 
 ### ----------------------------------------------------
 xunzip:
@@ -179,6 +184,24 @@ top_n_mf:
 	############################################
 	cd train/pig && bash top_n_mf.sh
 
+mf_predicted_topn:
+	############################################
+	### mf_predicted_topn
+	############################################
+	cd train/shell && bash predicted_topn.sh mf
+
+mf_predicted_tp:
+	############################################
+	### mf_predicted_tp
+	############################################
+	cd train/shell && bash predicted_tp.sh mf
+
+
+mf_link_cand_summary:
+	############################################
+	### mf_link_cand_summary
+	############################################
+	cd train/shell && bash link_cand_summary.sh mf
 
 
 ### ----------------------------------------------------
