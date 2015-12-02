@@ -14,7 +14,7 @@ cat ${LocalLinkCand} | grep -v 'user_id' > ${LocalLinkCand}.tmp
 cat ${LocalTestCore} | grep -v 'user_id' > ${LocalTestCore}.tmp
 N=$(cat $LocalTestCore | grep -v 'user_id' | wc -l)
 
-hadoop fs -mkdir -p ${HDFS_PRJ_HOME}
+hadoop fs -mkdir -p ${HDFS_TRAIN_DATA}
 hadoop fs -rm -r -skipTrash ${LinkCand} ${TestCore} ${PredictedTopN}* ${LinkCand}* >/dev/null 2>&1
 hadoop fs -put ${LocalLinkCand}.tmp ${LinkCand}
 hadoop fs -put ${LocalTestCore}.tmp ${TestCore}

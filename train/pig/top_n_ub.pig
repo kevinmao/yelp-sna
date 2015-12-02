@@ -26,21 +26,36 @@ LinkCand = LOAD '$LinkCand' AS (
     sim_delta           : double
 );
 LinkCand = DISTINCT LinkCand;
-LinkCandPruned = FILTER LinkCand BY sim_common_nbr >= $MIN_COM_NBR;
-STORE LinkCandPruned into '$LinkCandPruned' using PigStorage('\t', '-schema');
-
-LinkCandPrunedGrouped = GROUP LinkCandPruned ALL;
-LinkCandPrunedSummary = FOREACH LinkCandPrunedGrouped GENERATE
-    (long) $MIN_COM_NBR AS threshold,
-    (long) $TOPN AS num_link_topn,
-    COUNT($1) AS num_link_cand;
-STORE LinkCandPrunedSummary into '$LinkCandPruned.summary' using PigStorage('\t', '-schema');
 
 TestCore = LOAD '$TestCore' AS (
     user_id          : long,
     business_id      : long,
     stars            : int
 );
+TestCore = DISTINCT TestCore;
+
+--
+-- Prune
+--
+LinkCandPruned = FILTER LinkCand BY sim_common_nbr >= $MIN_COM_NBR;
+LinkCandPrunedGrouped = GROUP LinkCandPruned ALL;
+
+--
+-- coverage
+--
+J = JOIN LinkCandPruned BY (user_id, business_id), TestCore BY (user_id, business_id);
+JGrouped = GROUP J ALL;
+B = FOREACH JGrouped GENERATE COUNT(J) as coverage;
+
+--
+-- Summary
+--
+LinkCandPrunedSummary = FOREACH LinkCandPrunedGrouped GENERATE
+    (long) $MIN_COM_NBR AS threshold,
+    (long) $TOPN AS num_link_topn,
+    COUNT($1) AS num_link_cand,
+    B.coverage AS coverage;
+STORE LinkCandPrunedSummary into '$LinkCandPruned.summary' using PigStorage('\t', '-schema');
 
 --
 -- random

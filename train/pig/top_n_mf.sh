@@ -26,7 +26,6 @@ hadoop fs -put ${LocalMfPredicted} ${MfPredicted}
 # run
 fpig=top_n_mf.pig
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
-min_com_nbr_list="1"
 for min_com_nbr in `echo $min_com_nbr_list`; do
     WDIR=${HDFS_PRJ_HOME}/mf.out.ge.${min_com_nbr}
     hadoop fs -rm -r -skipTrash ${WDIR}
