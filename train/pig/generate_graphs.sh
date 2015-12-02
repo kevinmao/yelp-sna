@@ -21,7 +21,7 @@ G=$(basename $fpig | sed 's/_review_graph.pig//g')
 out=${WDIR}/${G}_${F}
 hadoop fs -rm -r -skipTrash ${out} >/dev/null 2>&1
 pig -useversion 0.11 -f ${DOC_PROCESS_PIG}/${fpig} \
--Dmapred.job.queue.name=gpu \
+-Dmapred.job.queue.name=default \
 -Dmapred.map.tasks.speculative.execution=true \
 -Dmapred.reduce.tasks.speculative.execution=true \
 -Dmapred.job.map.memory.mb=3076 \

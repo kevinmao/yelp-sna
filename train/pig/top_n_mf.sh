@@ -34,7 +34,7 @@ for min_com_nbr in `echo $min_com_nbr_list`; do
     PredictedTopN=${WDIR}/predicted_topn
 
     pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
-    -Dmapred.job.queue.name=gpu \
+    -Dmapred.job.queue.name=default \
     -Dmapred.map.tasks.speculative.execution=true \
     -Dmapred.reduce.tasks.speculative.execution=true \
     -Dmapred.job.map.memory.mb=4096 \
