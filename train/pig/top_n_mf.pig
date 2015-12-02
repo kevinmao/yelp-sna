@@ -62,6 +62,7 @@ LinkCandExt = FOREACH A2 GENERATE
     business_id,
     gamma_u,
     gamma_b,
+    sim_common_nbr                  AS common_nbr,
     (double)pstars*sim_common_nbr   AS sim_common_nbr,
     (double)pstars*sim_pref         AS sim_pref,
     (double)pstars*sim_jaccard      AS sim_jaccard,
@@ -75,7 +76,7 @@ LinkCandExt = FOREACH A2 GENERATE
 --
 -- Prune
 --
-LinkCandPruned = FILTER LinkCandExt BY sim_common_nbr >= $MIN_COM_NBR;
+LinkCandPruned = FILTER LinkCandExt BY common_nbr >= $MIN_COM_NBR;
 LinkCandPrunedGrouped = GROUP LinkCandPruned ALL;
 
 --
