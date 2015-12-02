@@ -13,6 +13,9 @@ xgraph: graph_info
 xcheck: check_user_review review_per_year
 xplot: degree_dist
 
+xmf: create_mf_data mf_train mf_predict
+
+
 ### ----------------------------------------------------
 xunzip:
 	############################################
@@ -163,6 +166,12 @@ mf_train:
 	### mf_train
 	############################################
 	cd train/shell && bash mf_train.sh
+
+mf_predict:
+	############################################
+	### mf_predict
+	############################################
+	cd train/shell && bash mf_predict.sh
 
 
 ### ----------------------------------------------------

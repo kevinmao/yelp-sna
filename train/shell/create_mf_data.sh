@@ -7,16 +7,24 @@ mkdir -p ${TRAIN_DATA}
 LOGGER "START..."
 ub_review_train_edges=${TRAIN_DATA}/ub_review_train_core_edges.tsv
 ub_review_test_edges=${TRAIN_DATA}/ub_review_test_core_edges.tsv
+ub_similarity=${TRAIN_DATA}/ub_similarity.tsv
 
 mf_train_data=${MF_DATA}/mf_ub_review_train.tsv
 mf_test_data=${MF_DATA}/mf_ub_review_test.tsv
+mf_ub_similarity=${MF_DATA}/mf_ub_similarity.tsv
 mf_meta=${MF_DATA}/meta
 
-rm -f ${mf_train_data} ${mf_test_data} ${mf_meta}
+rm -f ${mf_train_data} ${mf_test_data} ${mf_meta} ${mf_ub_similarity}
 
 cat ${ub_review_train_edges} | grep -vi 'user_id' > ${mf_train_data}
 cat ${ub_review_test_edges} | grep -vi 'user_id' > ${mf_test_data}
 
+# process review
+python ${TRAINING_PYTHON}/mf_transform.py \
+--input ${ub_similarity} \
+--output ${mf_ub_similarity}
+
+# meta info
 m=$(cat ${mf_train_data} | cut -f1 | sort -u | wc -l)
 n=$(cat ${mf_train_data} | cut -f2 | sort -u | wc -l)
 

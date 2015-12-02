@@ -2,9 +2,7 @@
 
 # global vars
 source ../../config.sh 
-mkdir -p ${TRAIN_DATA}
-
-lbl=${1:-rating}
+mkdir -p ${MF_DATA}
 
 mf_train_data=${MF_DATA}/mf_ub_review_train.tsv
 mf_test_data=${MF_DATA}/mf_ub_review_test.tsv
@@ -16,16 +14,15 @@ mf_log=${MF_DATA}/mf.log
 LOGGER "Start..."
 
 : << 'EOM'
-for t in {5,10,15,20,25,30}; do
-LOGGER "Training [factor = $t]"
-${LIBMF}/mf-train -k $t ${mf_train_data} ${mf_model}.$t
-${LIBMF}/mf-predict ${mf_test_data} ${mf_model}.$t ${mf_predicted_result}.$t
+for k in {10,20,30,40,50,60,70,80,90,100}; do
+LOGGER "Training [factor = $k]"
+${LIBMF}/mf-train -l 0.05 -k $k --nmf ${mf_train_data} ${mf_model}.$k
+${LIBMF}/mf-predict ${mf_test_data} ${mf_model}.$k ${mf_predicted_result}.$k
+echo
 done
 EOM
 
-${LIBMF}/mf-train ${mf_train_data} ${mf_model}
-${LIBMF}/mf-predict ${mf_test_data} ${mf_model} ${mf_predicted_result}
-
-LOGGER "Done."
+${LIBMF}/mf-train -k 100 --nmf ${mf_train_data} ${mf_model}
 
 } > ${mf_log}
+LOGGER "Done."
