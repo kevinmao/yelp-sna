@@ -173,6 +173,13 @@ mf_predict:
 	############################################
 	cd train/shell && bash mf_predict.sh
 
+top_n_mf:
+	############################################
+	### top_n_mf predicted on hadoop
+	############################################
+	cd train/pig && bash top_n_mf.sh
+
+
 
 ### ----------------------------------------------------
 create_induced_graphs:

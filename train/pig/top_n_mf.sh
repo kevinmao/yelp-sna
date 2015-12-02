@@ -3,39 +3,51 @@
 source ../../config.sh
 
 # files
-LocalPredicted=${HDFS_TMP}/for_mf_test.predict
+LocalLinkCand=${HDFS_TMP}/ub_similarity.tsv
 LocalTestCore=${HDFS_TMP}/ub_review_test_core_edges.tsv
+LocalMfPredicted=${HDFS_TMP}/mf_ub_similarity.predicted
 
-Predicted=${HDFS_TRAIN_DATA}/for_mf_test.predict
+LinkCand=${HDFS_TRAIN_DATA}/ub_similarity.tsv
 TestCore=${HDFS_TRAIN_DATA}/ub_review_test_core_edges.tsv
-WDIR=${HDFS_PRJ_HOME}/out2
-TopPredicted=${WDIR}/predict_topn
-TruePositive=${WDIR}/predict_topn.TP
+MfPredicted=${HDFS_TRAIN_DATA}/mf_ub_similarity.predicted
 
 # put onto hdfs
-cat ${LocalPredicted} | grep -v 'user_id' > ${LocalPredicted}.tmp
+cat ${LocalLinkCand} | grep -v 'user_id' > ${LocalLinkCand}.tmp
 cat ${LocalTestCore} | grep -v 'user_id' > ${LocalTestCore}.tmp
 N=$(cat $LocalTestCore | grep -v 'user_id' | wc -l)
 
-hadoop fs -mkdir -p ${HDFS_PRJ_HOME}
-hadoop fs -rm -r -skipTrash ${TruePositive}* ${TopPredicted}* >/dev/null 2>&1
-hadoop fs -put ${LocalPredicted}.tmp ${Predicted}
+hadoop fs -mkdir -p ${HDFS_TRAIN_DATA}
+hadoop fs -rm -r -skipTrash ${LinkCand} ${TestCore} ${MfPredicted} ${PredictedTopN}* ${LinkCand}* >/dev/null 2>&1
+hadoop fs -put ${LocalLinkCand}.tmp ${LinkCand}
 hadoop fs -put ${LocalTestCore}.tmp ${TestCore}
+hadoop fs -put ${LocalMfPredicted} ${MfPredicted}
+
 
 # run
 fpig=top_n_mf.pig
+min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
+min_com_nbr_list="1"
+for min_com_nbr in `echo $min_com_nbr_list`; do
+    WDIR=${HDFS_PRJ_HOME}/mf.out.ge.${min_com_nbr}
+    hadoop fs -rm -r -skipTrash ${WDIR}
+    hadoop fs -mkdir -p ${WDIR}
+    LinkCandPruned=${WDIR}/link_cand
+    PredictedTopN=${WDIR}/predicted_topn
 
-pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
--Dmapred.job.queue.name=gpu \
--Dmapred.map.tasks.speculative.execution=true \
--Dmapred.reduce.tasks.speculative.execution=true \
--Dmapred.job.map.memory.mb=4096 \
--Dmapred.job.reduce.memory.mb=4096 \
--param Predicted=$Predicted \
--param TestCore=$TestCore \
--param TopPredicted=$TopPredicted \
--param TruePositive=$TruePositive \
--param N=$N
+    pig -useversion 0.11 -f ${TRAINING_PIG}/${fpig} \
+    -Dmapred.job.queue.name=gpu \
+    -Dmapred.map.tasks.speculative.execution=true \
+    -Dmapred.reduce.tasks.speculative.execution=true \
+    -Dmapred.job.map.memory.mb=4096 \
+    -Dmapred.job.reduce.memory.mb=4096 \
+    -param TestCore=$TestCore \
+    -param MfPredicted=$MfPredicted \
+    -param LinkCand=$LinkCand \
+    -param LinkCandPruned=$LinkCandPruned \
+    -param PredictedTopN=$PredictedTopN \
+    -param TOPN=$N \
+    -param MIN_COM_NBR=$min_com_nbr
+done
 
 # clean up
-rm -f ${LocalPredicted}.tmp ${LocalTestCore}.tmp
+rm -f ${LocalLinkCand}.tmp ${LocalTestCore}.tmp
