@@ -10,7 +10,7 @@ outge=out.ge
 prefix=predicted_topn
 suffix=tsv
 
-MetricsList="common_nbr pref jaccard cosine overlap adamic delta"
+MetricsList="common_nbr pref jaccard cosine overlap adamic delta random"
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
 # each metrics

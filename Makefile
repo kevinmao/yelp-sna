@@ -3,7 +3,7 @@ xstats: xgraph xcheck xplot
 xsim: ub_similarity
 xtopn: top_n
 xpredicted: predicted_topn predicted_tp
- 
+xcand: link_cand_summary
 
 prepare: transform split_review
 xkeys: user_keys business_keys user_user
@@ -13,6 +13,7 @@ xgraph: graph_info
 xcheck: check_user_review review_per_year
 xplot: degree_dist
 
+### ----------------------------------------------------
 xunzip:
 	############################################
 	### uncompress yelp data
@@ -31,6 +32,7 @@ split_review:
 	############################################
 	cd docprocess/shell && bash split_review.sh
 
+### ----------------------------------------------------
 user_keys:
 	############################################
 	### user keys
@@ -61,9 +63,7 @@ get_maxwcc:
 	############################################
 	cd train/shell && bash get_maxwcc.sh
 
-
-
-####
+### ----------------------------------------------------
 core_review:
 	############################################
 	### core_review for train and test data
@@ -83,7 +83,7 @@ generate_graphs:
 	cd docprocess/pig && bash generate_graphs.sh
 
 
-###
+### ----------------------------------------------------
 check_user_review:
 	############################################
 	### check_user_review
@@ -118,7 +118,7 @@ histgram:
 	cd analysis/shell && bash histgram.sh
 
 
-
+### ----------------------------------------------------
 ub_similarity:
 	############################################
 	### ub_similarity
@@ -143,6 +143,29 @@ predicted_tp:
 	############################################
 	cd train/shell && bash predicted_tp.sh
 
+
+link_cand_summary:
+	############################################
+	### link_cand_summary
+	############################################
+	cd train/shell && bash link_cand_summary.sh
+
+
+### ----------------------------------------------------
+create_mf_data:
+	############################################
+	### create_mf_data
+	############################################
+	cd train/shell && bash create_mf_data.sh
+
+mf_train:
+	############################################
+	### mf_train
+	############################################
+	cd train/shell && bash mf_train.sh
+
+
+### ----------------------------------------------------
 create_induced_graphs:
 	############################################
 	### create_induced_graphs
@@ -161,16 +184,4 @@ cross_prod:
 	### cross_prod
 	############################################
 	cd train/shell && bash cross_prod.sh
-
-create_mf_data:
-	############################################
-	### create_mf_data
-	############################################
-	cd train/shell && bash create_mf_data.sh
-
-mf_train:
-	############################################
-	### mf_train
-	############################################
-	cd train/shell && bash mf_train.sh
-
+### ----------------------------------------------------
