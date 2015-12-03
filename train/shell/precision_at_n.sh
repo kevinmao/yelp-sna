@@ -3,21 +3,21 @@
 # global vars
 source ../../config.sh 
 
+PTOPN=${1:-10}
+
 OUTDIR=${PREDICT_DATA}/summary
 mkdir -p ${OUTDIR}
 
 outge=out.ge
-[[ -n "$1" ]] && outge=$1.out.ge
+[[ -n "$2" ]] && outge=$2.out.ge
 
 prefix=predicted_topn
 suffix=tsv
 outprefix=${OUTDIR}/precision
-[[ -n "$1" ]] && outprefix=${OUTDIR}/$1_precision
-
-PTOPN=${2:-50}
+[[ -n "$2" ]] && outprefix=${OUTDIR}/$2_precision
 
 MetricsList="common_nbr pref jaccard adamic delta random"
-[[ -n "$1" ]] && MetricsList="common_nbr pref jaccard adamic delta pstars"
+[[ -n "$2" ]] && MetricsList="common_nbr pref jaccard adamic delta pstars"
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 
 # each metrics
