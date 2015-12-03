@@ -11,8 +11,10 @@ outge=out.ge
 
 prefix=predicted_topn
 suffix=tsv
-outprefix=${OUTDIR}/${prefix}
-[[ -n "$1" ]] && outprefix=${OUTDIR}/$1_${prefix}
+outprefix=${OUTDIR}/precision
+[[ -n "$1" ]] && outprefix=${OUTDIR}/$1_precision
+
+PTOPN=${2:-50}
 
 MetricsList="common_nbr pref jaccard adamic delta random"
 [[ -n "$1" ]] && MetricsList="common_nbr pref jaccard adamic delta pstars"
@@ -32,14 +34,14 @@ for metric in `echo ${MetricsList}`; do
         if [ -d $fin ]; then
             # predicted TP
             LOGGER "Processing ${folder}/${subfolder}"
-            tp=$(cat ${fin}/part-* | awk '($4==1) {print $0}' | wc -l)
+            tp=$(cat ${fin}/part-* | head -$PTOPN | awk '($4==1) {print $0}' | wc -l)
             printf "%d\t%d\n" "${min_com_nbr}" "${tp}" >> ${fou}
         fi    
     done
 done
 
 # combine
-fout=${outprefix}.TP.${suffix}
+fout=${outprefix}.AT$PTOPN.${suffix}
 mv ${outprefix}.common_nbr.${suffix} ${fout}
 for metric in `echo ${MetricsList}`; do
     if [ "$metric" == "common_nbr" ]; then

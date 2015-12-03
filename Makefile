@@ -5,12 +5,12 @@ xsim: ub_similarity
 
 ### ----------------------------------------------------
 xtopn: top_n
-xpredicted: predicted_tp link_cand_summary
+xpredicted: link_cand_summary predicted_tp precision_at_n
 
 ### ----------------------------------------------------
 xmf: create_mf_data mf_train mf_predict
 xmftopn: top_n_mf
-xmfpredicted: mf_predicted_tp
+xmfpredicted: mf_predicted_tp mf_precision_at_n
 
 ### ----------------------------------------------------
 prepare: transform split_review
@@ -158,6 +158,12 @@ link_cand_summary:
 	############################################
 	cd train/shell && bash link_cand_summary.sh
 
+precision_at_n:
+	############################################
+	### precision_at_n
+	############################################
+	cd train/shell && bash precision_at_n.sh
+
 
 ### ----------------------------------------------------
 create_mf_data:
@@ -202,6 +208,13 @@ mf_link_cand_summary:
 	### mf_link_cand_summary
 	############################################
 	cd train/shell && bash link_cand_summary.sh mf
+
+
+mf_precision_at_n:
+	############################################
+	### mf_precision_at_n
+	############################################
+	cd train/shell && bash precision_at_n.sh mf
 
 
 ### ----------------------------------------------------
