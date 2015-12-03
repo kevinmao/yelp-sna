@@ -5,12 +5,12 @@ xsim: ub_similarity
 
 ### ----------------------------------------------------
 xtopn: top_n
-xpredicted: predicted_topn predicted_tp link_cand_summary
+xpredicted: predicted_tp link_cand_summary
 
 ### ----------------------------------------------------
 xmf: create_mf_data mf_train mf_predict
 xmftopn: top_n_mf
-xmfpredicted: mf_predicted_topn mf_predicted_tp mf_link_cand_summary
+xmfpredicted: mf_predicted_tp
 
 ### ----------------------------------------------------
 prepare: transform split_review

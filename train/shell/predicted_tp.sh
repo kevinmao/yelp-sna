@@ -4,7 +4,6 @@
 source ../../config.sh 
 
 OUTDIR=${PREDICT_DATA}/summary
-[[ -n "$1" ]] && OUTDIR=${PREDICT_DATA}/$1_summary
 mkdir -p ${OUTDIR}
 
 outge=out.ge
@@ -12,6 +11,8 @@ outge=out.ge
 
 prefix=predicted_topn
 suffix=tsv
+outprefix=${OUTDIR}/${prefix}
+[[ -n "$1" ]] && outprefix=${OUTDIR}/$1_${prefix}
 
 MetricsList="common_nbr pref jaccard cosine overlap adamic delta random pstars"
 min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
@@ -20,7 +21,7 @@ min_com_nbr_list="1 2 5 10 15 20 25 30 35 40 45 50 55 60 65 70"
 for metric in `echo ${MetricsList}`; do
     F=${prefix}.${metric}
     subfolder=${F}
-    fou=${OUTDIR}/${F}.${suffix}
+    fou=${outprefix}.${metric}.${suffix}
     rm -f ${fou}
     lbl=tp_${metric}
     printf "%s\t%s\n" "threshold" "${lbl}" > ${fou}
@@ -37,14 +38,14 @@ for metric in `echo ${MetricsList}`; do
 done
 
 # combine
-fout=${OUTDIR}/${prefix}.TP.${suffix}
-mv ${OUTDIR}/${prefix}.common_nbr.${suffix} ${fout}
+fout=${outprefix}.TP.${suffix}
+mv ${outprefix}.common_nbr.${suffix} ${fout}
 for metric in `echo ${MetricsList}`; do
     if [ "$metric" == "common_nbr" ]; then
         continue
     fi    
     ftmp=tmp.`date +%s`
-    F=${OUTDIR}/${prefix}.${metric}.${suffix}
+    F=${outprefix}.${metric}.${suffix}
     cat $F | cut -f2 > ${ftmp}.1
     paste ${fout} ${ftmp}.1 > ${ftmp}.2
     mv ${ftmp}.2 ${fout}

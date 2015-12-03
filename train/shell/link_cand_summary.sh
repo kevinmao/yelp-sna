@@ -4,13 +4,13 @@
 source ../../config.sh 
 
 OUTDIR=${PREDICT_DATA}/summary
-[[ -n "$1" ]] && OUTDIR=${PREDICT_DATA}/$1_summary
 mkdir -p ${OUTDIR}
 
 outge=out.ge
 [[ -n "$1" ]] && outge=$1.out.ge
 
 fsum=${OUTDIR}/link_cand_summary.tsv
+[[ -n "$1" ]] && fsum=${OUTDIR}/$1_link_cand_summary.tsv
 
 # combine summary data
 rm -f ${fsum}
