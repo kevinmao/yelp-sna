@@ -25,12 +25,12 @@ set (h(6), 'facecolor', 'y');
 set (h(7), 'facecolor', 'g');
 
 grid on;
-xlabel('Top Position');
-ylabel('Precision @N');
-title('Link Prediction - Precision @N');
+xlabel('Top Position','Fontsize', 14);
+ylabel('Precision @N','Fontsize', 14);
+title('Link Prediction - Precision @N', 'Fontsize', 18);
 h = legend('Adamic-Adar','Common-Neighbors','Delta','Jaccard','Matrix Factorization','Preferential-Attachment','Random');
 legend (h, 'location', 'northeast');
-set (h, 'fontsize', 6);
+set (h, 'fontsize', 8);
 
 % print
 print -dpng '../../report/PatN.precision.bar.png';

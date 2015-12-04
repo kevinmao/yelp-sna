@@ -21,12 +21,12 @@ plot(threshold, nmf, 'k-');
 plot(threshold, pref, 'y-');
 plot(threshold, random, 'g-');
 grid on;
-xlabel('Top Position');
-ylabel('Precision @N');
-title('Link Prediction - Precision @N');
+xlabel('Top Position','Fontsize', 14);
+ylabel('Precision @N','Fontsize', 14);
+title('Link Prediction - Precision @N', 'Fontsize', 18);
 h = legend('Adamic-Adar','Common-Neighbors','Delta','Jaccard','Matrix Factorization','Preferential-Attachment','Random');
 legend (h, 'location', 'northeast');
-set (h, 'fontsize', 6);
+set (h, 'fontsize', 8);
 
 % print
 print -dpng '../../report/PatN.precision.png';

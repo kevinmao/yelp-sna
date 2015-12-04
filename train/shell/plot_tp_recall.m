@@ -3,15 +3,16 @@ clear; close all; clc;
 N = 25401;
 
 % load data
-DATA = dlmread ('../../data/predict/summary/TP.combined.tsv', '\t', 1, 0);
+DATA = dlmread ('../../data/predict/summary/TP.combined.augmented.tsv', '\t', 1, 0);
 threshold = DATA(:,1);
-common_nbr = DATA(:,2) / N;
-pref = DATA(:,3) / N;
-jaccard = DATA(:,4) / N;
-adamic = DATA(:,5) / N;
-delta = DATA(:,6) / N;
-random = DATA(:,7) / N;
-nmf = DATA(:,8) / N;
+coverage = DATA(:,9);
+common_nbr = DATA(:,2) ./ coverage;
+pref = DATA(:,3) ./ coverage;
+jaccard = DATA(:,4) ./ coverage;
+adamic = DATA(:,5) ./ coverage;
+delta = DATA(:,6) ./ coverage;
+random = DATA(:,7) ./ coverage;
+nmf = DATA(:,8) ./ coverage;
 
 % plot
 figure; hold on;
@@ -24,12 +25,12 @@ plot(threshold, pref, 'y-');
 plot(threshold, random, 'g-');
 grid on;
 xlabel('Pruning Threshold','Fontsize', 14);
-ylabel('Precision','Fontsize', 14);
-title('Link Prediction - Precision vs Pruning Threshold', 'Fontsize', 18);
+ylabel('Recall','Fontsize', 14);
+title('Link Prediction - Recall vs Pruning Threshold', 'Fontsize', 18);
 h = legend('Adamic-Adar','Common-Neighbors','Delta','Jaccard','Matrix Factorization','Preferential-Attachment','Random');
-legend (h, 'location', 'southeast');
+legend (h, 'location', 'northwest');
 set (h, 'fontsize', 8);
 
 % print
-print -dpng '../../report/TP.precision.png';
+print -dpng '../../report/TP.recall.png';
 close all;
