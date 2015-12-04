@@ -4,8 +4,7 @@
 source ../../config.sh 
 
 OUTDIR=${PREDICT_DATA}/summary
-patn=${OUTDIR}
-mkdir -p ${patn}
+mkdir -p ${OUTDIR}
 
 topnlist="10 20 30 40 50"
 Threshold=${1:-30}
