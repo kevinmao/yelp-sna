@@ -31,4 +31,22 @@ yelp academic dataset
 	├── tip.tsv
 	└── user.tsv
 	```
-	
+
+4. Training data
+
+	```
+	train/
+	├── business_keys.tsv
+	├── ub_review_all_edges.tsv
+	├── ub_review_test_core_all_edges.tsv
+	├── ub_review_test_core_edges.tsv
+	├── ub_review_test_edges.tsv
+	├── ub_review_train_core_all_edges.tsv
+	├── ub_review_train_core_edges.tsv
+	├── ub_review_train_edges.tsv
+	├── ub_review_train_maxwcc_edges.tsv
+	├── user_friend_edges.tsv
+	└── user_keys.tsv
+	```
+
+		
