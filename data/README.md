@@ -79,7 +79,7 @@ yelp academic dataset
 6. Matrix Factorization data
 
 	```
-	mf
+	mf/
 	├── meta
 	├── mf_ub_review_test.predicted
 	├── mf_ub_review_test.score
@@ -88,10 +88,46 @@ yelp academic dataset
 	└── model
 	```
 
-7. Link prediction data
+7. Hadoop HDFS data
 
 	```
-	predict
+	hdfs/
+	├── mf.out.ge.1
+	│   ├── link_cand.summary
+	│   │   └── part-r-00000
+	│   ├── predicted_topn.adamic
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.common_nbr
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.cosine
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.delta
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.jaccard
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.overlap
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   ├── predicted_topn.pref
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	│   └── predicted_topn.pstars
+	│   │   ├── part-r-00000
+	│   │   ├── ......
+	├── mf.out.ge.10
+	│   ├── link_cand.summary
+	│   │   ├── ......
+	```
+
+8. Link prediction data
+
+	```
+	predict/
 	├── summary
 	│   ├── PatN.combined.tsv
 	│   ├── TP.combined.augmented.tsv
@@ -101,4 +137,7 @@ yelp academic dataset
 	│   ├── mf_predicted_topn.TP.tsv
 	│   ├── precision.T30.tsv
 	│   └── predicted_topn.TP.tsv
+	└── topn
+	    ├── predicted_topn.adamic.T1.tsv
+	    ├── ......	
 	```
