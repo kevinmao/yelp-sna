@@ -87,4 +87,18 @@ yelp academic dataset
 	├── mf_ub_review_train.tsv
 	└── model
 	```
-				
+
+7. Link prediction data
+
+	```
+	predict
+	├── summary
+	│   ├── PatN.combined.tsv
+	│   ├── TP.combined.augmented.tsv
+	│   ├── TP.combined.tsv
+	│   ├── link_cand_summary.tsv
+	│   ├── mf_precision.T30.tsv
+	│   ├── mf_predicted_topn.TP.tsv
+	│   ├── precision.T30.tsv
+	│   └── predicted_topn.TP.tsv
+	```
