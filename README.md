@@ -5,13 +5,13 @@ Social Network Analysis with Yelp Academic Dataset
 
 1. Dependencies
     
-* [LIBMF](https://www.csie.ntu.edu.tw/~cjlin/libmf/)
-* [Snappy](http://snap.stanford.edu/snappy/doc/tutorial/index-tut.html)
-* Octave 3.8
-* Python-2.7
-* numpy-1.9
-* Hadoop
-* Pig Latin
+	* [LIBMF](https://www.csie.ntu.edu.tw/~cjlin/libmf/)
+	* [Snappy](http://snap.stanford.edu/snappy/doc/tutorial/index-tut.html)
+	* Octave 3.8
+	* Python-2.7
+	* numpy-1.9
+	* Hadoop
+	* Pig Latin
 
 2. Check out 
 
