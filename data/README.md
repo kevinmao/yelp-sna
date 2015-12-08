@@ -49,4 +49,30 @@ yelp academic dataset
 	└── user_keys.tsv
 	```
 
+5. Analysis data
+
+	```
+	analysis/
+	├── business_hist.pdf
+	├── business_hist.tsv
+	├── business_hist_all.pdf
+	├── business_hist_all.tsv
+	├── business_hist_maxwcc.pdf
+	├── business_hist_maxwcc.tsv
+	├── digree_dist_plot.pdf
+	├── graph_info_all.txt
+	├── graph_info_test.txt
+	├── graph_info_test_core.txt
+	├── graph_info_train.txt
+	├── graph_info_train_core.txt
+	├── review_per_year.tsv
+	├── stats.tsv
+	├── user_hist.pdf
+	├── user_hist.tsv
+	├── user_hist_all.pdf
+	├── user_hist_all.tsv
+	├── user_hist_maxwcc.pdf
+	└── user_hist_maxwcc.tsv
+	
+	```
 		
