@@ -251,4 +251,13 @@ cross_prod:
 	### cross_prod
 	############################################
 	cd train/shell && bash cross_prod.sh
+
+### ----------------------------------------------------
+octave_plot:
+	############################################
+	### create plots in octave
+	############################################
+	cd train/shell && octave -f plot_tp.m
+	cd train/shell && octave -f plot_tp_recall.m
+	cd train/shell && octave -f plot_precision_atn_bar.m
 ### ----------------------------------------------------
