@@ -75,4 +75,16 @@ yelp academic dataset
 	└── user_hist_maxwcc.tsv
 	
 	```
-		
+
+6. Matrix Factorization data
+
+	```
+	mf
+	├── meta
+	├── mf_ub_review_test.predicted
+	├── mf_ub_review_test.score
+	├── mf_ub_review_test.tsv
+	├── mf_ub_review_train.tsv
+	└── model
+	```
+				
